@@ -1,11 +1,15 @@
 import React, { ChangeEvent, FC, useEffect, useState } from 'react';
 import './App.css';
+import InputItem from './Components/InputItem';
 import TodoTask from './Components/TodoTask';
 import { ITask } from './Interfaces';
 
 const App: FC = () => {
-    const [task, setTask] = useState<string>('');
-    const [deadline, setDeadline] = useState<number>(0);
+    const [task, setTask] = useState<ITask>({
+        taskName: '',
+        deadline: 0,
+        number: 0,
+    });
     const [todoList, setTodoList] = useState<ITask[]>(() => {
         const saved = localStorage.getItem('state');
         if (!saved) return [];
@@ -21,22 +25,21 @@ const App: FC = () => {
     }, [todoList]);
 
     const handleChange = (event: ChangeEvent<HTMLInputElement>): void => {
-        if (event.target.name === 'task') {
-            setTask(event.target.value);
-        } else {
-            setDeadline(Number(event.target.value));
-        }
+        const newTask = {
+            ...task,
+        };
+        newTask[event.target.name] = event.target.value;
+        setTask(newTask);
     };
 
     const addTask = (): void => {
         const newTask = {
-            taskName: task,
-            deadline: deadline,
+            taskName: task?.taskName,
+            deadline: task?.deadline,
             number: new Date().valueOf(),
         };
         setTodoList([...todoList, newTask]);
-        setTask('');
-        setDeadline(0);
+        // setTask();
     };
 
     const completeTask = (taskIdToDelete: number): void => {
@@ -50,19 +53,19 @@ const App: FC = () => {
     return (
         <div className="App">
             <div className="header">
-                <input
+                <InputItem
                     type="text"
-                    value={task}
-                    name="task"
+                    value={task?.taskName}
+                    name="taskName"
                     placeholder="Task"
-                    onChange={handleChange}
+                    handleChange={handleChange}
                 />
-                <input
+                <InputItem
                     type="number"
-                    value={deadline}
+                    value={task?.deadline}
                     name="deadline"
                     placeholder="Deadline"
-                    onChange={handleChange}
+                    handleChange={handleChange}
                 />
                 <button onClick={addTask}>Add Task</button>
             </div>

@@ -1,7 +1,8 @@
 import React, { ChangeEvent, FC, useEffect, useState } from 'react';
-import './App.css';
-import InputItem from './Components/InputItem';
-import TodoTask from './Components/TodoTask';
+import './styles/App.css';
+import InputItem from './Components/Input/InputItem';
+import SelectMenu from './Components/SelectMenu/SelectMenu';
+import Task from './Components/Task/Task';
 import { ITask } from './Interfaces';
 
 const App: FC = () => {
@@ -9,7 +10,19 @@ const App: FC = () => {
         taskName: '',
         deadline: 0,
         number: 0,
+        taskType: '',
+        repeatSpread: '',
+        repeatDay: [],
     });
+    const taskTypes = ['Курсы', 'Домашние', 'Еще Один'];
+    const repeatValues = [
+        'Не повторять',
+        'Ежедневно',
+        'Еженедельно',
+        'Ежемесячно',
+    ];
+    const weekDays = ['Пн', 'Вт', 'Ср', 'Чт', 'Пт', 'Сб', 'Вс'];
+
     const [todoList, setTodoList] = useState<ITask[]>(() => {
         const saved = localStorage.getItem('state');
         if (!saved) return [];
@@ -28,18 +41,49 @@ const App: FC = () => {
         const newTask = {
             ...task,
         };
-        newTask[event.target.name] = event.target.value;
+        if (Array.isArray(newTask[event.target.name])) {
+            if (newTask[event.target.name].includes(event.target.value)) {
+                newTask[event.target.name] = newTask[event.target.name].filter(
+                    (el: string) => el !== event.target.value
+                );
+            } else {
+                newTask[event.target.name].push(event.target.value);
+            }
+        } else {
+            if (newTask[event.target.name] === event.target.value) {
+                newTask[event.target.name] = '';
+            } else {
+                newTask[event.target.name] = event.target.value;
+            }
+        }
         setTask(newTask);
     };
+
+    const validateTask = (task: ITask): boolean => {
+        let valid = false;
+        if (
+            task.taskName !== ''
+            && task.taskType !== ''
+            && task.repeatSpread !== ''
+        ) valid = true
+        return valid
+    }
 
     const addTask = (): void => {
         const newTask = {
             taskName: task?.taskName,
             deadline: task?.deadline,
             number: new Date().valueOf(),
+            taskType: task?.taskType,
+            repeatSpread: task?.repeatSpread,
+            repeatDay: task?.repeatDay,
+            date: new Date(),
         };
-        setTodoList([...todoList, newTask]);
-        // setTask();
+        if (validateTask(newTask)) {
+            setTodoList([...todoList, newTask]);
+        } else {
+            console.warn('Task invalid')
+        }
     };
 
     const completeTask = (taskIdToDelete: number): void => {
@@ -52,27 +96,56 @@ const App: FC = () => {
 
     return (
         <div className="App">
-            <div className="header">
-                <InputItem
-                    type="text"
-                    value={task?.taskName}
-                    name="taskName"
-                    placeholder="Task"
-                    handleChange={handleChange}
-                />
-                <InputItem
-                    type="number"
-                    value={task?.deadline}
-                    name="deadline"
-                    placeholder="Deadline"
-                    handleChange={handleChange}
-                />
-                <button onClick={addTask}>Add Task</button>
-            </div>
-            <div className="todo-list">
+            <header className="header">
+                <div className="task">
+                    <InputItem
+                        className="task__name"
+                        type="text"
+                        name="taskName"
+                        placeholder="Задание"
+                        handleChange={handleChange}
+                    />
+                    <SelectMenu
+                        name="taskType"
+                        value={task.taskType}
+                        defaultValue="Тип задания"
+                        handleChange={handleChange}
+                        items={taskTypes}
+                    />
+                    <SelectMenu
+                        name="repeatSpread"
+                        value={task.repeatSpread}
+                        defaultValue="Повтор"
+                        handleChange={handleChange}
+                        items={repeatValues}
+                    />
+                    <SelectMenu
+                        name="repeatDay"
+                        value={task.repeatDay}
+                        defaultValue="Дни повтора"
+                        handleChange={handleChange}
+                        items={weekDays}
+                    />
+                    <InputItem
+                        className="input__min"
+                        type="number"
+                        name="deadline"
+                        placeholder="Deadline"
+                        min="0"
+                        handleChange={handleChange}
+                    />
+                    <button className="task__submit" onClick={addTask}>
+                        Добавить задание
+                    </button>
+                </div>
+            </header>
+
+            <div className="tasks-container">
                 {todoList.map((task: ITask) => {
                     return (
-                        <TodoTask
+                        <Task
+                            weekDays={weekDays}
+                            repeatValues={repeatValues}
                             key={task.number}
                             task={task}
                             completeTask={completeTask}

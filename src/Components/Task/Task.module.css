@@ -1,0 +1,45 @@
+.task {
+    display: flex;
+    padding: 0.5rem 1rem;
+    width: 79rem;
+    background-color: #A8DADC;
+    justify-content: space-between;
+    align-items: center;
+}
+
+.active {
+    background-color: #457B9D;
+}
+
+.task header {
+    display: flex;
+    flex-direction: column;
+    row-gap: 0.5rem;
+}
+
+.task h3 {
+    margin: 0;
+    color: #F1FAEE;
+    font-weight: 300;
+    font-size: 3rem;
+}
+
+.task span {
+    padding-left: 0.1em;
+    font-size: 1.2rem;
+    color: #F1FAEE;
+}
+
+.btn {
+    border: none;
+    cursor: pointer;
+    width: 3rem;
+    height: 3rem;
+    color: #F1FAEE;
+    background-color: #E63946;
+    border-radius: 10px;
+}
+
+.btn:hover {
+    background-color: #b62c37;
+}

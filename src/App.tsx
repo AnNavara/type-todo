@@ -14,7 +14,10 @@ const App: FC = () => {
         repeatSpread: '',
         repeatDay: [],
     });
-    const taskTypes = ['Курсы', 'Домашние', 'Еще Один'];
+    const taskTypes = [
+        'Курсы',
+        'Домашние',
+    ];
     const repeatValues = [
         'Не повторять',
         'Ежедневно',
@@ -65,9 +68,11 @@ const App: FC = () => {
             task.taskName !== ''
             && task.taskType !== ''
             && task.repeatSpread !== ''
-        ) valid = true
-        return valid
-    }
+        ) {
+            valid = true;
+        }
+        return valid;
+    };
 
     const addTask = (): void => {
         const newTask = {
@@ -82,16 +87,33 @@ const App: FC = () => {
         if (validateTask(newTask)) {
             setTodoList([...todoList, newTask]);
         } else {
-            console.warn('Task invalid')
+            console.warn('Task invalid');
         }
     };
 
-    const completeTask = (taskIdToDelete: number): void => {
-        setTodoList(
-            todoList.filter((task) => {
-                return task.number !== taskIdToDelete;
-            })
-        );
+    const completeTask = (event: any, taskIdToDelete: number): void => {
+        const task  = todoList.filter((task) => {
+            return task.number === taskIdToDelete;
+        })[0];
+        if (task.repeatSpread === 'Не повторять' || event.shiftKey) {
+            setTodoList(
+                todoList.filter((task) => {
+                    return task.number !== taskIdToDelete;
+                })
+            );
+        } else {
+
+            setTodoList(
+                [...todoList.filter((task) => {
+                    return task.number !== taskIdToDelete;
+                }),
+                {
+                    ...task,
+                    lastCompletion: new Date(),
+                },
+                ]
+            );
+        }
     };
 
     return (

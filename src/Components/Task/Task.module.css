@@ -1,10 +1,12 @@
 .task {
     display: flex;
-    padding: 0.5rem 1rem;
+    padding: 1rem;
     width: 79rem;
     background-color: #A8DADC;
     justify-content: space-between;
     align-items: center;
+    column-gap: 3rem;
+    font-size: 1.2rem;
 }
 
 .active {
@@ -21,16 +23,31 @@
     margin: 0;
     color: #F1FAEE;
     font-weight: 300;
-    font-size: 3rem;
+    font-size: 2.6rem;
 }
 
-.task span {
+span {
     padding-left: 0.1em;
-    font-size: 1.2rem;
+    font-size: inherit;
+    color: inherit;
+}
+
+.repeat {
+    padding-top: 0.6rem;
+    font-size: 1.6rem;
+    margin-left: auto;
+    align-self: flex-start;
+    justify-self: flex-end;
+    color: #1D3557;
+}
+
+.repeatToday {
     color: #F1FAEE;
+    font-weight: 600;
 }
 
 .btn {
+    align-self: start;
     border: none;
     cursor: pointer;
     width: 3rem;

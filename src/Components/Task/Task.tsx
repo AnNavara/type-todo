@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { MouseEvent } from 'react';
 import { ITask } from '../../Interfaces';
 import styles from './Task.module.css';
 
@@ -6,7 +6,7 @@ interface Props {
     task: ITask;
     repeatValues: any;
     weekDays: any;
-    completeTask(taskIdToDelete: number): void;
+    completeTask(event: any, taskIdToDelete: number): void;
 }
 
 const TodoTask = ({ task, completeTask, repeatValues, weekDays }: Props) => {
@@ -18,30 +18,40 @@ const TodoTask = ({ task, completeTask, repeatValues, weekDays }: Props) => {
         if (task.repeatDay.length === 0) {
             weekday = true;
         } else {
-            task.repeatDay.forEach((day: string) => {
-                let correctedDay = weekDays.indexOf(day) < 7 ? weekDays.indexOf(day) + 1: 0
-                if ((new Date()).getDay() === correctedDay) {
-                    weekday = true;
-                }
-            });
+            weekday = activeDay();
         }
         return weekday;
     }
 
+    const activeDay = (): boolean => {
+        let activeDay = false;
+        task.repeatDay.forEach((day: string) => {
+            if (isToday(day)) activeDay = true;
+        });
+        return activeDay;
+    }
+
+    const isToday = (day: string): boolean => {
+        let correctedDay = weekDays.indexOf(day) < 7 ? weekDays.indexOf(day) + 1: 0
+        return (new Date()).getDay() === correctedDay;
+    }
+
     // Repeat Handling
     let completedBefore = task.lastCompletion || false;
+    
+    if (!completedBefore && isWeekday()) active = true;
     if (
         (task.repeatSpread === 'Ежедневно' || task.repeatSpread === 'Не повторять')
         && isWeekday()
     ) active = true;
     if (
         task.repeatSpread === 'Еженедельно'
-        && (!completedBefore || ((new Date(task.lastCompletion)).getDate() - 7 <= 0))
+        && (completedBefore && ((new Date()).getDate() - (new Date(task.lastCompletion)).getDate() >= 7))
         && isWeekday()
     ) active = true;
     if (
         task.repeatSpread === 'Ежемесячно'
-        && (!completedBefore || ((new Date(task.lastCompletion)).getDate() - 30 <= 0))
+        && (completedBefore && ((new Date()).getDate() - (new Date(task.lastCompletion)).getDate() >= 30))
         && isWeekday()
     ) active = true;
 
@@ -71,7 +81,12 @@ const TodoTask = ({ task, completeTask, repeatValues, weekDays }: Props) => {
                 <h3>{task.taskName}</h3>
                 {+task.deadline !== 0 && <span>{deadlineDate}</span>}
             </header>
-            <button className={styles.btn} onClick={() => completeTask(task.number)}>X</button>
+            <div className={styles.repeat}>
+                {task.repeatDay.length > 0 ? task.repeatDay.map((day: string) => {
+                    return <span className={isToday(day) ? styles.repeatToday : ''}>{day} &nbsp;</span>
+                }) : ''}
+            </div>
+            <button className={styles.btn} onClick={(event) => completeTask(event, task.number)}>X</button>
         </section>
     )
 };

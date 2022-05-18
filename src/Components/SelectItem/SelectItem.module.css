@@ -6,21 +6,21 @@
     text-align: start;
     font-weight: 400;
     font-size: 1.4rem;
-    color: #F1FAEE;
+    color: var(--color-xlight);
     border: none;
-    background-color: #1D3557;
+    background-color: var(--color-dark);
     cursor: pointer;
     text-align: start;
 }
 
 .item:hover {
-    background-color: #457B9D;
+    background-color: var(--color-xdark);
 }
 
 .active {
-    background-color: #E63946;
+    background-color: var(--color-accent);
 }
 
 .active:hover {
-    background-color: #E63946;
+    background-color: var(--color-accent);
 }

@@ -7,18 +7,24 @@
 .toggle {
     width: 100%;
     padding: 0.8rem;
+    padding-inline-start: 1rem;
     font-size: 1.6rem;
     font-weight: 400;
     border: none;
     color: #F1FAEE;
-    background-color: #1D3557;
+    background-color: var(--color-dark);
     cursor: pointer;
-    /* text-align: start; */
+    text-align: start;
+    transition: all 0.15s ease-in-out;
+}
+
+.toggle:hover {
+    background-color: var(--color-xdark);
 }
 
 .selected {
-    background-color: #E63946;
-    color: #F1FAEE;
+    background-color: var(--color-accent);
+    color: var(--color-xlight);
 }
 
 .dropdown {

@@ -1,6 +1,15 @@
 @import url(./lib/normalize.css);
 @import url('https://fonts.googleapis.com/css2?family=Montserrat:ital,wght@0,300;0,400;0,600;1,300;1,400;1,600&display=swap');
 
+:root {
+  --color-xdark: #132641;
+  --color-dark: #1D3557;
+  --color-light: #A8DADC;
+  --color-xlight: #F1FAEE;
+  --color-accent: #E63946;
+  --color-xaccent: #9b1823;
+}
+
 html {
   font-size: 62.5%;
   font-family: 'Montserrat', sans-serif;
@@ -9,7 +18,7 @@ html {
 #root {
   min-width: 100vw;
   min-height: 100vh;
-  background-color: #F1FAEE;
+  background-color: var(--color-xlight);
 }
 
 .App {
@@ -24,14 +33,21 @@ html {
   margin-top: 4rem;
 }
 
-.input__min { width: 8rem; }
+.input__min { width: 9rem; }
 
 .task {
   display: grid;
   width: min-content;
   grid-template-columns: repeat(5, 1fr);
   grid-template-rows: auto 1fr;
-  background-color: #A8DADC;
+  background-color: var(--color-dark);
+}
+
+.task::after {
+  content: "";
+  top: 0;
+  left: 0;
+  width: 100%;
 }
 
 .task__submit {
@@ -40,8 +56,14 @@ html {
   grid-column: 5/6;
   font-size: 1.6rem;
   border: none;
-  color: #F1FAEE;
-  background-color: #E63946;
+  color: var(--color-xlight);
+  background-color: var(--color-accent);
+  transition: all 0.15s ease-in-out;
+  cursor: pointer;
+}
+
+.task__submit:hover {
+  background-color: var(--color-xaccent);
 }
 
 .task__name {

@@ -1,7 +1,7 @@
 import { ITask } from '../Interfaces';
-import { converMsToDays } from './utils';
+import { convertMsToDays } from './utils';
 
-const isTaskActive = (task: ITask, weekDays: any[]): any => {
+const taskStatusHandler = (task: ITask, weekDays: any[]): any => {
     const deadlineAllwaysActiveDays = 3;
     let active = false;
 
@@ -30,7 +30,7 @@ const isTaskActive = (task: ITask, weekDays: any[]): any => {
     // Repeat Handling
     //
     const dateDiffToToday = (date: Date): number => {
-        return new Date().getTime() - new Date(date).getTime();
+        return convertMsToDays(new Date().getTime() - new Date(date).getTime());
     }
     // check if task was completed before
     let completedBefore = task.lastCompletion || false;
@@ -49,13 +49,13 @@ const isTaskActive = (task: ITask, weekDays: any[]): any => {
 
         if (
             task.repeatSpread === 'Еженедельно'
-            && converMsToDays(dateDiffToToday(task.lastCompletion)) >= 7
+            && dateDiffToToday(task.lastCompletion) >= 7
             && isTaskDayActive()
         ) active = true;
 
         if (
             task.repeatSpread === 'Ежемесячно'
-            && converMsToDays(dateDiffToToday(task.lastCompletion)) >= 30
+            && dateDiffToToday(task.lastCompletion) >= 30
             && isTaskDayActive()
         ) active = true;
     }
@@ -74,7 +74,7 @@ const isTaskActive = (task: ITask, weekDays: any[]): any => {
 
         // Task allways active if deadline approaching
         if (
-            converMsToDays(deadline.getTime() - new Date().getTime()) <= deadlineAllwaysActiveDays
+            convertMsToDays(deadline.getTime() - new Date().getTime()) <= deadlineAllwaysActiveDays
             && task.deadline !== 0
         ) active = true;
     }
@@ -82,4 +82,4 @@ const isTaskActive = (task: ITask, weekDays: any[]): any => {
     return { active, isToday, deadlineDate };
 };
 
-export default isTaskActive;
+export default taskStatusHandler;

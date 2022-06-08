@@ -2,9 +2,9 @@ import React, { ChangeEvent, FC, useEffect, useState } from 'react';
 import './styles/App.css';
 import InputItem from './Components/Input/InputItem';
 import SelectMenu from './Components/SelectMenu/SelectMenu';
-import Task from './Components/Task/Task';
 import { ITask } from './Interfaces';
 import { loadLocalStorage, saveLocalStorage } from './utils/utils';
+import TaskList from './Components/TaskList/TaskList';
 
 const App: FC = () => {
     const [task, setTask] = useState<ITask>({
@@ -18,9 +18,6 @@ const App: FC = () => {
     const taskTypes = [
         'Курсы',
         'Домашние',
-        'Genshin: ХуТао',
-        'Genshin: Аяка',
-        'Genshin: Рейден',
     ];
     const repeatValues = [
         'Не повторять',
@@ -161,18 +158,11 @@ const App: FC = () => {
                 </div>
             </header>
 
-            <div className="tasks-container">
-                {todoList.map((task: ITask) => {
-                    return (
-                        <Task
-                            weekDays={weekDays}
-                            key={task.number}
-                            task={task}
-                            completeTask={completeTask}
-                        />
-                    );
-                })}
-            </div>
+            <TaskList
+                taskList={todoList}
+                weekDays={weekDays}
+                completeTask={completeTask}
+            />
         </div>
     );
 };

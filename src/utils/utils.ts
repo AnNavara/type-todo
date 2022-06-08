@@ -8,6 +8,6 @@ export const loadLocalStorage = (id: string): any => {
     return JSON.parse(saved);
 }
 
-export const converMsToDays = (ms: number): number => {
+export const convertMsToDays = (ms: number): number => {
     return Math.floor(ms / (24*60*60*1000));
 }

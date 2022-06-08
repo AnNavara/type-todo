@@ -1,6 +1,6 @@
 import React from 'react';
 import { ITask } from '../../Interfaces';
-import isTaskActive from '../../utils/isTaskActive';
+import taskStatusHandler from '../../utils/taskStatusHandler';
 import styles from './Task.module.css';
 
 interface Props {
@@ -10,7 +10,7 @@ interface Props {
 }
 
 const TodoTask = ({ task, completeTask, weekDays }: Props) => {
-    const { active, isToday, deadlineDate } = isTaskActive(task, weekDays)
+    const { active, isToday, deadlineDate } = taskStatusHandler(task, weekDays)
 
     let cssClasses = [styles.task]
     if (active) cssClasses.push(styles.active)

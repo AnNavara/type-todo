@@ -21,9 +21,12 @@
 
 .task h3 {
     margin: 0;
+    padding-block: 0.5rem;
     color: #F1FAEE;
     font-weight: 300;
     font-size: 2.6rem;
+    line-height: 1;
+    cursor: pointer;
 }
 
 span {
@@ -59,4 +62,11 @@ span {
 
 .btn:hover {
     background-color: #b62c37;
+}
+
+.editContainer {
+    height: 3.6rem;
+    display: flex;
+    justify-items: stretch;
+    align-items: stretch;
 }

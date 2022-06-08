@@ -1,0 +1,16 @@
+.btn {
+    display: flex;
+    align-items: center;
+    padding-top: 0.3rem;
+    padding-inline: 1rem;
+    font-size: 1.6rem;
+    border: none;
+    color: var(--color-xlight);
+    background-color: var(--color-accent);
+    transition: all 0.15s ease-in-out;
+    cursor: pointer;
+}
+
+.btn:hover {
+    background-color: var(--color-xaccent);
+}

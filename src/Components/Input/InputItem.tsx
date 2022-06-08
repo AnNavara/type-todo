@@ -4,10 +4,12 @@ import styles from './InputItem.module.css';
 interface Props {
     type: string;
     name: string;
-    className: string;
+    value?: string;
+    className?: string;
     min?: string;
     placeholder?: string;
-    handleChange(event: ChangeEvent<HTMLInputElement>): void;
+    handleChange(event: any): any;
+    // handleChange(event: ChangeEvent<HTMLInputElement>): void;
 }
 
 const InputItem = ({
@@ -16,10 +18,12 @@ const InputItem = ({
     placeholder,
     handleChange,
     className,
+    value,
     min,
 }: Props) => {
     return (
         <input
+            value={value}
             min={min}
             className={`${styles.input} ${className}`}
             type={type}

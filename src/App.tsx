@@ -70,6 +70,18 @@ const App: FC = () => {
         return valid;
     };
 
+    const updateTask = (taskName: string, id: number): void =>{
+        const updatedTask = todoList.filter((task) => task.number === id)[0];
+        updatedTask.taskName = taskName;
+        if (validateTask(updatedTask)) {
+            setTodoList([
+                ...todoList.filter((task) => {
+                    return task.number !== id;
+                }), updatedTask
+            ]);
+        }
+    }
+
     const addTask = (): void => {
         const newTask = {
             taskName: task?.taskName,
@@ -159,6 +171,7 @@ const App: FC = () => {
             </header>
 
             <TaskList
+                updateTask={updateTask}
                 taskList={todoList}
                 weekDays={weekDays}
                 completeTask={completeTask}

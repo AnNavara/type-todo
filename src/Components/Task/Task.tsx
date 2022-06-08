@@ -1,25 +1,52 @@
-import React from 'react';
+import React, { ChangeEvent, useState } from 'react';
 import { ITask } from '../../Interfaces';
 import taskStatusHandler from '../../utils/taskStatusHandler';
+import Button from '../Button/Button';
+import InputItem from '../Input/InputItem';
 import styles from './Task.module.css';
 
 interface Props {
     task: ITask;
     weekDays: any[];
+    updateTask(taskName: string, id: number): void;
     completeTask(event: any, taskIdToDelete: number): void;
 }
 
-const TodoTask = ({ task, completeTask, weekDays }: Props) => {
-    const { active, isToday, deadlineDate } = taskStatusHandler(task, weekDays)
+const TodoTask = ({ task, completeTask, weekDays, updateTask }: Props) => {
+    const { active, isToday, deadlineDate } = taskStatusHandler(task, weekDays);
+    const [ isChanging, setIsChanging ] = useState<boolean>(false);
+    const [ newTaskName, setNewTaskName ] = useState<string>(task.taskName);
 
-    let cssClasses = [styles.task]
-    if (active) cssClasses.push(styles.active)
+    const handleChange = (event: ChangeEvent<HTMLInputElement>) => {
+        setNewTaskName(event.target.value);
+    };
+
+    const editTask = (): void =>{
+        task.taskName = newTaskName;
+        setIsChanging(false);
+        updateTask(newTaskName, task.number);
+    };
+
+    let cssClasses = [styles.task];
+    if (active) cssClasses.push(styles.active);
 
     return (
         <section key={task.number} className={cssClasses.join(' ')}>
             <header className={styles.content}>
                 <span>{task.taskType}</span>
-                <h3>{task.taskName}</h3>
+                {isChanging ? 
+                    <div className={styles.editContainer}>
+                        <InputItem
+                            type="text"
+                            name="newTaskName"
+                            value={newTaskName}
+                            placeholder={task.taskName}
+                            handleChange={handleChange}
+                        />
+                        <Button click={editTask}>✔️</Button>
+                    </div>
+                    : <h3 onClick={() => setIsChanging(true)}>{task.taskName}</h3>
+                }
                 {+task.deadline !== 0 && <span>{deadlineDate}</span>}
             </header>
             <div className={styles.repeat}>

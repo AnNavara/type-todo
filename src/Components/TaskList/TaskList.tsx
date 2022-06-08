@@ -6,10 +6,11 @@ import Task from '../Task/Task';
 interface Props {
     taskList: ITask[];
     weekDays: any[];
+    updateTask(taskName: string, id: number): void;
     completeTask(event: any, taskIdToDelete: number): void;
 }
 
-const TaskList = ({ taskList, weekDays, completeTask }: Props) => {
+const TaskList = ({ taskList, weekDays, completeTask, updateTask }: Props) => {
     const activeTasks: ITask[] = [],
         completedTasks: ITask[] = [];
 
@@ -30,6 +31,7 @@ const TaskList = ({ taskList, weekDays, completeTask }: Props) => {
                 </header>
                 {activeTasks.map((task) => {
                     return (<Task
+                        updateTask={updateTask}
                         weekDays={weekDays}
                         key={task.number}
                         task={task}
@@ -43,6 +45,7 @@ const TaskList = ({ taskList, weekDays, completeTask }: Props) => {
                 </header>
                 {completedTasks.map((task) => {
                     return (<Task
+                        updateTask={updateTask}
                         weekDays={weekDays}
                         key={task.number}
                         task={task}

@@ -1,4 +1,4 @@
-import React, { MouseEvent } from 'react';
+import React from 'react';
 import { ITask } from '../../Interfaces';
 import styles from './Task.module.css';
 

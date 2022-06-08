@@ -16,7 +16,6 @@ html {
 }
 
 #root {
-  min-width: 100vw;
   min-height: 100vh;
   background-color: var(--color-xlight);
 }

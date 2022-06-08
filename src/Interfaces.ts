@@ -4,6 +4,6 @@ export interface ITask {
     number: number;
     taskType: string;
     repeatSpread: string;
-    repeatDay: any;
+    repeatDays: any[];
     [key: string]: any;
 }

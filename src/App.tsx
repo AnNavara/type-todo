@@ -13,7 +13,7 @@ const App: FC = () => {
         number: 0,
         taskType: '',
         repeatSpread: '',
-        repeatDay: [],
+        repeatDays: [],
     });
     const taskTypes = [
         'Курсы',
@@ -80,7 +80,7 @@ const App: FC = () => {
             number: new Date().valueOf(),
             taskType: task?.taskType,
             repeatSpread: task?.repeatSpread,
-            repeatDay: task?.repeatDay,
+            repeatDays: task?.repeatDays,
             date: new Date(),
         };
         if (validateTask(newTask)) {
@@ -141,8 +141,8 @@ const App: FC = () => {
                         items={repeatValues}
                     />
                     <SelectMenu
-                        name="repeatDay"
-                        value={task.repeatDay}
+                        name="repeatDays"
+                        value={task.repeatDays}
                         defaultValue="Дни повтора"
                         handleChange={handleChange}
                         items={weekDays}
@@ -166,7 +166,6 @@ const App: FC = () => {
                     return (
                         <Task
                             weekDays={weekDays}
-                            repeatValues={repeatValues}
                             key={task.number}
                             task={task}
                             completeTask={completeTask}

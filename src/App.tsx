@@ -4,6 +4,7 @@ import InputItem from './Components/Input/InputItem';
 import SelectMenu from './Components/SelectMenu/SelectMenu';
 import Task from './Components/Task/Task';
 import { ITask } from './Interfaces';
+import { loadLocalStorage, saveLocalStorage } from './utils/utils';
 
 const App: FC = () => {
     const [task, setTask] = useState<ITask>({
@@ -17,6 +18,9 @@ const App: FC = () => {
     const taskTypes = [
         'Курсы',
         'Домашние',
+        'Genshin: ХуТао',
+        'Genshin: Аяка',
+        'Genshin: Рейден',
     ];
     const repeatValues = [
         'Не повторять',
@@ -25,16 +29,11 @@ const App: FC = () => {
         'Ежемесячно',
     ];
     const weekDays = ['Пн', 'Вт', 'Ср', 'Чт', 'Пт', 'Сб', 'Вс'];
-
     const [todoList, setTodoList] = useState<ITask[]>(() => {
-        const saved = localStorage.getItem('state');
-        if (!saved) return [];
-        return JSON.parse(saved);
-    });
-
-    const saveState = (state: ITask[]): void => {
-        localStorage.setItem('state', JSON.stringify(state));
-    };
+        const state = loadLocalStorage('state');
+        return state ? state : [];
+    })
+    const saveState = (state: ITask[]) => (saveLocalStorage('state', state));
 
     useEffect(() => {
         saveState(todoList);

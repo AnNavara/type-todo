@@ -1,6 +1,8 @@
 import { ITask } from '../Interfaces';
+import { converMsToDays } from './utils';
 
 const isTaskActive = (task: ITask, weekDays: any[]): any => {
+    const deadlineAllwaysActiveDays = 3;
     let active = false;
 
     //
@@ -8,54 +10,55 @@ const isTaskActive = (task: ITask, weekDays: any[]): any => {
     //
     // is input day of the week is today
     const isToday = (day: string): boolean => {
-        // Correct from US weekday format
-        let correctedDay =
-            weekDays.indexOf(day) < 7 ? weekDays.indexOf(day) + 1 : 0;
-        return new Date().getDay() === correctedDay;
+        let correctedDay = weekDays.indexOf(day) + 1;
+        return new Date().getUTCDay() === correctedDay;
     };
-    // is Task active days contain today
+    // is Task active days contains today
     const isTaskDayActive = (): boolean => {
         let activeDay = false;
+        // Task active day if any weekday
+        if (task.repeatDays.length === 0) return true;
         task.repeatDays.forEach((day: string) => {
-            if (isToday(day)) activeDay = true;
+            if (isToday(day)) {
+                activeDay = true;
+            }
         });
         return activeDay;
-    };
-    const isWeekday = (): boolean => {
-        let weekday = false;
-        if (task.repeatDays.length === 0) {
-            // active weekday if any weekday
-            weekday = true;
-        } else {
-            weekday = isTaskDayActive();
-        }
-        return weekday;
     };
 
     //
     // Repeat Handling
     //
+    const dateDiffToToday = (date: Date): number => {
+        return new Date().getTime() - new Date(date).getTime();
+    }
     // check if task was completed before
     let completedBefore = task.lastCompletion || false;
+    // task active if yet to be completed and today is active day
+    if (!completedBefore && isTaskDayActive()) active = true;
+    // task active if it doesn't have to be repeated
+    if (task.repeatSpread === 'Не повторять') active = true
+    // Repeated tasks can only be inactive if they weren't completed before
+    if (!!completedBefore) {
+        // task active if it have to be repeated everyday
+        // wasn't completed today and today is active day for the task
+        if (task.repeatSpread === 'Ежедневно'
+            && new Date(task.lasCompletion).getDay() !== new Date().getDay()
+            && isTaskDayActive()
+        ) active = true;
 
-    if (!completedBefore && isWeekday()) active = true;
-    if (
-        (task.repeatSpread === 'Ежедневно' ||
-            task.repeatSpread === 'Не повторять') &&
-        isWeekday()
-    ) active = true;
-    if (
-        task.repeatSpread === 'Еженедельно' &&
-        completedBefore &&
-        new Date().getDate() - new Date(task.lastCompletion).getDate() >= 7 &&
-        isWeekday()
-    ) active = true;
-    if (
-        task.repeatSpread === 'Ежемесячно' &&
-        completedBefore &&
-        new Date().getDate() - new Date(task.lastCompletion).getDate() >= 30 &&
-        isWeekday()
-    ) active = true;
+        if (
+            task.repeatSpread === 'Еженедельно'
+            && converMsToDays(dateDiffToToday(task.lastCompletion)) >= 7
+            && isTaskDayActive()
+        ) active = true;
+
+        if (
+            task.repeatSpread === 'Ежемесячно'
+            && converMsToDays(dateDiffToToday(task.lastCompletion)) >= 30
+            && isTaskDayActive()
+        ) active = true;
+    }
 
     //
     // Deadline handling
@@ -69,11 +72,11 @@ const isTaskActive = (task: ITask, weekDays: any[]): any => {
             timeStyle: 'short',
         }).format(deadline);
 
+        // Task allways active if deadline approaching
         if (
-            deadline.getDate() - new Date().getDate() <= 3 &&
-            task.deadline !== 0
-        )
-            active = true;
+            converMsToDays(deadline.getTime() - new Date().getTime()) <= deadlineAllwaysActiveDays
+            && task.deadline !== 0
+        ) active = true;
     }
 
     return { active, isToday, deadlineDate };

@@ -16,7 +16,8 @@ html {
 }
 
 #root {
-  min-height: 100vh;
+  padding-bottom: 2rem;
+  min-height: calc(100vh - 2rem);
   background-color: var(--color-xlight);
 }
 

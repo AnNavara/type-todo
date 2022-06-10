@@ -8,8 +8,7 @@ interface Props {
     className?: string;
     min?: string;
     placeholder?: string;
-    handleChange(event: any): any;
-    // handleChange(event: ChangeEvent<HTMLInputElement>): void;
+    handleChange(event: ChangeEvent<HTMLInputElement>): void;
 }
 
 const InputItem = ({

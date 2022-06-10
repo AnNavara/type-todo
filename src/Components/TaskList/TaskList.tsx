@@ -14,7 +14,7 @@ const TaskList = ({ taskList, weekDays, completeTask, updateTask }: Props) => {
     const activeTasks: ITask[] = [],
         completedTasks: ITask[] = [];
 
-    taskList.forEach((task) => {
+    taskList.sort((taskA, taskB) => taskA.number - taskB.number).forEach((task) => {
         const { active } = taskStatusHandler(task, weekDays);
         if (active) {
             activeTasks.push(task);

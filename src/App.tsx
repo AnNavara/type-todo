@@ -18,6 +18,9 @@ const App: FC = () => {
     const taskTypes = [
         'Курсы',
         'Домашние',
+        'Genshin: ХуТао',
+        'Genshin: Аяка',
+        'Genshin: Рейден',
     ];
     const repeatValues = [
         'Не повторять',

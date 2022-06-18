@@ -27,14 +27,48 @@
     color: var(--color-xlight);
 }
 
+.wrapper {
+    position: absolute;
+    width: 100%;
+    top: 100%;
+    left: 0;
+    overflow: hidden;
+}
+
 .dropdown {
-    position: relative;
     z-index: 100;
     display: flex;
     padding-block: 0.5rem;
     flex-direction: column;
     align-items: flex-start;
     position: absolute;
-    top: 100%;
+    top: 0;
     left: 0;
+    transition: height 0.5s ease-in-out;
+}
+
+.dropdown-enter-active {
+    animation: slideBottom 0.5s forwards;
+}
+
+.dropdown-exit-active {
+    animation: slideTop 0.5s forwards;
+}
+
+@keyframes slideBottom {
+    0% {
+        transform: translateY(-110%);
+    }
+    100% {
+        transform: translateY(0);
+    }
+}
+
+@keyframes slideTop {
+    0% {
+        transform: translateY(0);
+    }
+    100% {
+        transform: translateY(-110%);
+    }
 }

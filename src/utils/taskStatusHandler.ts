@@ -10,8 +10,7 @@ const taskStatusHandler = (task: ITask, weekDays: any[]): any => {
     //
     // is input day of the week is today
     const isToday = (day: string): boolean => {
-        let correctedDay = weekDays.indexOf(day) + 1;
-        return new Date().getUTCDay() === correctedDay;
+        return new Date().getDay() === weekDays.indexOf(day) + 1;
     };
     // is Task active days contains today
     const isTaskDayActive = (): boolean => {

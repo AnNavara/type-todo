@@ -136,6 +136,7 @@ const App: FC = () => {
                         type="text"
                         name="taskName"
                         placeholder="Задание"
+                        addTask={addTask}
                         handleChange={handleChange}
                     />
                     <SelectMenu

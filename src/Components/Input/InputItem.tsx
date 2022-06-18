@@ -1,4 +1,4 @@
-import React, { ChangeEvent } from 'react';
+import React, { ChangeEvent, KeyboardEventHandler } from 'react';
 import styles from './InputItem.module.css';
 
 interface Props {
@@ -8,6 +8,7 @@ interface Props {
     className?: string;
     min?: string;
     placeholder?: string;
+    addTask?(): void;
     handleChange(event: ChangeEvent<HTMLInputElement>): void;
 }
 
@@ -18,8 +19,15 @@ const InputItem = ({
     handleChange,
     className,
     value,
+    addTask,
     min,
 }: Props) => {
+    const handleKeyDown = (event: any) => {
+        if (event.key === 'Enter' && addTask) {
+            addTask();
+        }
+    };
+
     return (
         <input
             value={value}
@@ -29,6 +37,7 @@ const InputItem = ({
             name={name}
             placeholder={placeholder}
             onChange={handleChange}
+            onKeyDown={handleKeyDown}
         />
     );
 };

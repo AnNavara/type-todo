@@ -1,4 +1,4 @@
-import React, { ChangeEvent, KeyboardEventHandler } from 'react';
+import React, { ChangeEvent } from 'react';
 import styles from './InputItem.module.css';
 
 interface Props {

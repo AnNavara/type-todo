@@ -2,7 +2,7 @@
     display: flex;
     padding: 1rem;
     width: 79rem;
-    background-color: #A8DADC;
+    background-color: var(--color-light);
     justify-content: space-between;
     align-items: center;
     column-gap: 3rem;
@@ -10,7 +10,7 @@
 }
 
 .active {
-    background-color: #457B9D;
+    background-color: var(--color-light-accent);
 }
 
 .task header {
@@ -22,7 +22,7 @@
 .task h3 {
     margin: 0;
     padding-block: 0.5rem;
-    color: #F1FAEE;
+    color: var(--color-xlight);
     font-weight: 300;
     font-size: 2.6rem;
     line-height: 1;
@@ -45,23 +45,24 @@ span {
 }
 
 .repeatToday {
-    color: #F1FAEE;
+    color: var(--color-xlight);
     font-weight: 600;
 }
 
 .btn {
     align-self: start;
+    flex-shrink: 0;
     border: none;
     cursor: pointer;
-    width: 3rem;
-    height: 3rem;
-    color: #F1FAEE;
-    background-color: #E63946;
-    border-radius: 10px;
+    width: 4rem;
+    height: 4rem;
+    color: var(--color-xlight);
+    transition: background-color .2s ease-in-out;
+    background-color: var(--color-dark);
 }
 
 .btn:hover {
-    background-color: #b62c37;
+    background-color: var(--color-xaccent);
 }
 
 .editContainer {

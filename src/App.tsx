@@ -158,6 +158,7 @@ const App: FC = () => {
                         defaultValue="Дни повтора"
                         handleChange={handleChange}
                         items={weekDays}
+                        multiple
                     />
                     <InputItem
                         className="input__min"

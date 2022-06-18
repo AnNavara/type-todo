@@ -1,23 +1,41 @@
-import React from 'react';
+import React, { ChangeEvent } from 'react';
 import styles from './SelectItem.module.css';
 
-const SelectItem = (props: any) => {
+interface Props {
+    name: string;
+    value: string;
+    multiple?: boolean;
+    children: any;
+    active: boolean;
+    handleChange(event: ChangeEvent<HTMLInputElement>): void;
+    setIsOpen(isOpen: boolean): void;
+}
 
+const SelectItem = ({
+    value,
+    name,
+    active,
+    handleChange,
+    setIsOpen,
+    multiple,
+    children,
+}: Props) => {
     const clickHandler = (event: any) => {
-        props.handleChange(event);
+        handleChange(event);
+        if (!multiple) setIsOpen(false);
     };
-    
+
     const cssClasses = [styles.item];
-    if (props.active) cssClasses.push(styles.active);
+    if (active) cssClasses.push(styles.active);
 
     return (
         <button
-            value={props.value}
-            name={props.name}
+            value={value}
+            name={name}
             onClick={(event) => clickHandler(event)}
             className={cssClasses.join(' ')}
         >
-            {props.children}
+            {children}
         </button>
     );
 };

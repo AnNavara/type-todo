@@ -1,8 +1,8 @@
 import React, { ChangeEvent, useState } from 'react';
 import { ITask } from '../../Interfaces';
 import taskStatusHandler from '../../utils/taskStatusHandler';
-import Button from '../Button/Button';
-import InputItem from '../Input/InputItem';
+import Button from '../UI/Button/Button';
+import InputItem from '../UI/Input/InputItem';
 import styles from './Task.module.css';
 
 interface Props {

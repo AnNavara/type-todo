@@ -1,13 +1,14 @@
 import React, { ChangeEvent, FC, useEffect, useState } from 'react';
 import './styles/App.css';
-import InputItem from './Components/Input/InputItem';
-import SelectMenu from './Components/SelectMenu/SelectMenu';
+import InputItem from './components/UI/Input/InputItem';
+import SelectMenu from './components/UI/SelectMenu/SelectMenu';
 import { ITask } from './Interfaces';
 import { loadLocalStorage, saveLocalStorage } from './utils/utils';
-import TaskList from './Components/TaskList/TaskList';
+import TaskList from './components/TaskList/TaskList';
+import Modal from './components/UI/Modal/Modal';
 
 const App: FC = () => {
-    const [task, setTask] = useState<ITask>({
+    const [ task, setTask ] = useState<ITask>({
         taskName: '',
         deadline: 0,
         number: 0,
@@ -15,6 +16,7 @@ const App: FC = () => {
         repeatSpread: '',
         repeatDays: [],
     });
+    const [ modal, setModal ] = useState<boolean>(false);
     const taskTypes = [
         'Курсы',
         'Домашние',
@@ -129,6 +131,11 @@ const App: FC = () => {
 
     return (
         <div className="App">
+            <button onClick={() => setModal(!modal)} >Show Modal</button>
+            <Modal visible={modal} setVisible={setModal}>
+                Some Shitty
+                Multiline Txtet
+            </Modal>
             <header className="header">
                 <div className="task">
                     <InputItem

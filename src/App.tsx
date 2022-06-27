@@ -131,11 +131,6 @@ const App: FC = () => {
 
     return (
         <div className="App">
-            <button onClick={() => setModal(!modal)} >Show Modal</button>
-            <Modal visible={modal} setVisible={setModal}>
-                Some Shitty
-                Multiline Txtet
-            </Modal>
             <header className="header">
                 <div className="task">
                     <InputItem

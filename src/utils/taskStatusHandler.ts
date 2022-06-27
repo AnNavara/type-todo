@@ -2,7 +2,11 @@ import { ITask } from '../Interfaces';
 import { convertMsToDays } from './utils';
 
 const taskStatusHandler = (task: ITask, weekDays: any[]): any => {
-    const deadlineAllwaysActiveDays = 3;
+    const DEADLINE_ALWAYS_ACTIVE = 3;
+    let completedBefore: boolean = false;
+    if (task.lastCompletion) completedBefore = true;
+    let lastCompletion: Date = new Date(0);
+    if (task.lastCompletion) lastCompletion = new Date(task.lastCompletion);
     let active = false;
 
     //
@@ -26,35 +30,44 @@ const taskStatusHandler = (task: ITask, weekDays: any[]): any => {
     };
 
     //
+    // Week Handling
+    //
+    const sundayOfDateWeek = (date: Date): Date => {
+        const SUNDAY_DAY = 6;
+        if (date.getDay() === SUNDAY_DAY) return date;
+        const dateDiff = SUNDAY_DAY - date.getDay();
+        const sundayDate = date.getDate() + dateDiff;
+        const sunday = new Date(date);
+        sunday.setDate(sundayDate);
+        return sunday;
+    }
+
+    //
     // Repeat Handling
     //
-    const dateDiffToToday = (date: Date): number => {
-        return convertMsToDays(new Date().getTime() - new Date(date).getTime());
-    }
-    // check if task was completed before
-    let completedBefore = task.lastCompletion || false;
     // task active if yet to be completed and today is active day
     if (!completedBefore && isTaskDayActive()) active = true;
     // task active if it doesn't have to be repeated
     if (task.repeatSpread === 'Не повторять') active = true
     // Repeated tasks can only be inactive if they weren't completed before
-    if (!!completedBefore) {
+    if (completedBefore) {
         // task active if it have to be repeated everyday
         // wasn't completed today and today is active day for the task
         if (task.repeatSpread === 'Ежедневно'
-            && new Date(task.lasCompletion).getDay() !== new Date().getDay()
+            && (lastCompletion ? lastCompletion.getDay() : lastCompletion) !== (new Date()).getDay()
             && isTaskDayActive()
         ) active = true;
 
         if (
             task.repeatSpread === 'Еженедельно'
-            && dateDiffToToday(task.lastCompletion) >= 7
+            && sundayOfDateWeek(lastCompletion).getDate() < new Date().getDate()
             && isTaskDayActive()
         ) active = true;
 
         if (
             task.repeatSpread === 'Ежемесячно'
-            && dateDiffToToday(task.lastCompletion) >= 30
+            && lastCompletion.getMonth() < new Date().getMonth()
+            && lastCompletion.getFullYear() <= new Date().getFullYear()
             && isTaskDayActive()
         ) active = true;
     }
@@ -73,7 +86,7 @@ const taskStatusHandler = (task: ITask, weekDays: any[]): any => {
 
         // Task allways active if deadline approaching
         if (
-            convertMsToDays(deadline.getTime() - new Date().getTime()) <= deadlineAllwaysActiveDays
+            convertMsToDays(deadline.getTime() - new Date().getTime()) <= DEADLINE_ALWAYS_ACTIVE
             && task.deadline !== 0
         ) active = true;
     }

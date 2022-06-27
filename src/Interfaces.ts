@@ -5,5 +5,6 @@ export interface ITask {
     taskType: string;
     repeatSpread: string;
     repeatDays: any[];
+    lastCompletion?: Date;
     [key: string]: any;
 }

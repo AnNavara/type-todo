@@ -1,15 +1,12 @@
 import React, { ChangeEvent, FC, useEffect, useState } from 'react';
 import './styles/App.css';
-import InputItem from './components/UI/Input/InputItem';
-import SelectMenu from './components/UI/SelectMenu/SelectMenu';
 import { ITask } from './Interfaces';
 import { loadLocalStorage, saveLocalStorage } from './utils/utils';
 import TaskList from './components/TaskList/TaskList';
 import Modal from './components/UI/Modal/Modal';
-import { repeatValues, weekDays } from './consts';
 import Button from './components/UI/Button/Button';
-import Toggle from './components/UI/Toggle/Toggle';
 import TaskCreator from './components/TaskCreator/TaskCreator';
+import TypesManager from './components/TypesManager/TypesManager';
 
 const App: FC = () => {
     const [ task, setTask ] = useState<ITask>({
@@ -25,13 +22,11 @@ const App: FC = () => {
         return state ? state : [];
     })
     const [ modal, setModal ] = useState<boolean>(false);
-    const taskTypes = [
-        'Курсы',
-        'Домашние',
-        'Genshin: ХуТао',
-        'Genshin: Аяка',
-        'Genshin: Рейден',
-    ];
+    const [ taskTypes, setTaskTypes ] = useState<string[]>(() => {
+        const types = loadLocalStorage('types');
+        return types ? types : [];
+    })
+    const [ typesManager, setTypesManager ] = useState<boolean>(false);
 
     const saveState = (state: ITask[]) => (saveLocalStorage('state', state));
 
@@ -108,18 +103,30 @@ const App: FC = () => {
         }
     };
 
-    const completeTask = (event: any, taskIdToDelete: number): void => {
-        const task  = todoList.filter((task) => {
+    const addType = (type: string): void => {
+        if (type !== '') {
+            saveLocalStorage('types', [...taskTypes, type]);
+            setTaskTypes([...taskTypes, type]);
+        } else {
+            console.warn('Type invalid')
+        }
+    }
+
+    const removeType = (typeToRemove: string): void => {
+        setTaskTypes(taskTypes.filter((type) => type !== typeToRemove));
+    }
+
+    const completeTask = (taskIdToDelete: number): void => {
+        const task = todoList.filter((task) => {
             return task.number === taskIdToDelete;
         })[0];
-        if (task.repeatSpread === 'Не повторять' || event.shiftKey) {
+        if (task.repeatSpread === 'Не повторять') {
             setTodoList(
                 todoList.filter((task) => {
                     return task.number !== taskIdToDelete;
                 })
             );
         } else {
-
             setTodoList(
                 [...todoList.filter((task) => {
                     return task.number !== taskIdToDelete;
@@ -133,27 +140,45 @@ const App: FC = () => {
         }
     };
 
+    const removeTask = (taskIdToDelete: number): void => {
+        setTodoList(
+            todoList.filter((task) => {
+                return task.number !== taskIdToDelete;
+            })
+        );
+    }
+
     return (
         <div className="App">
             <header className='header'>
                 <Button click={setModal}>
                     Добавить задание
                 </Button>
-                <div>|<b>*Toggle*</b>| Темная тема | Светлая тема</div>
             </header>
             <Modal visible={modal} setVisible={setModal}>
-                <TaskCreator 
-                    addTask={addTask}
-                    handleChange={handleChange}
-                    taskTypes={taskTypes}
-                    task={task}           
-                />
+                {
+                    typesManager
+                    ?   <TypesManager 
+                            addType={addType}
+                            removeType={removeType}
+                            types={taskTypes} 
+                            setTypesManager={setTypesManager}
+                        />
+                    :   <TaskCreator 
+                            setTypesManager={setTypesManager}
+                            addTask={addTask}
+                            handleChange={handleChange}
+                            taskTypes={taskTypes}
+                            task={task}           
+                        />
+                }
             </Modal>
 
             <TaskList
                 updateTask={updateTask}
                 taskList={todoList}
                 completeTask={completeTask}
+                removeTask={removeTask}
             />
         </div>
     );

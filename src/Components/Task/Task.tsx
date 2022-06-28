@@ -8,10 +8,11 @@ import styles from './Task.module.css';
 interface Props {
     task: ITask;
     updateTask(taskName: string, id: number): void;
-    completeTask(event: any, taskIdToDelete: number): void;
+    completeTask(taskIdToDelete: number): void;
+    removeTask(taskIdToDelete: number): void;
 }
 
-const TodoTask = ({ task, completeTask, updateTask }: Props) => {
+const TodoTask = ({ task, completeTask, updateTask, removeTask }: Props) => {
     const { active, isToday, deadlineDate } = taskStatusHandler(task);
     const [ isChanging, setIsChanging ] = useState<boolean>(false);
     const [ newTaskName, setNewTaskName ] = useState<string>(task.taskName);
@@ -53,8 +54,8 @@ const TodoTask = ({ task, completeTask, updateTask }: Props) => {
                     return <span key={day + task.number} className={isToday(day) ? styles.repeatToday : ''}>{day} &nbsp;</span>
                 }) : ''}
             </div>
-            {active ? <button className={styles.btn} onClick={(event) => completeTask(event, task.number)}>✔️</button> : ''}
-            <button className={styles.btn} onClick={(event) => completeTask(event, task.number)}>❌</button>
+            {active ? <button className={styles.btn} onClick={(event) => completeTask(task.number)}>✔️</button> : ''}
+            <button className={styles.btn} onClick={(event) => removeTask(task.number)}>❌</button>
         </section>
     )
 };

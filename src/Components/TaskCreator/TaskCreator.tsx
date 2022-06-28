@@ -1,4 +1,4 @@
-import React, { ChangeEvent } from 'react';
+import React, { ChangeEvent, useState } from 'react';
 import { repeatValues, weekDays } from '../../consts';
 import { ITask } from '../../Interfaces';
 import Button from '../UI/Button/Button';
@@ -9,11 +9,12 @@ import styles from './TaskCreator.module.css';
 interface Props {
     addTask(): void;
     handleChange(event: ChangeEvent<HTMLInputElement>): void;
+    setTypesManager(status: boolean): void;
     taskTypes: string[];
     task: ITask;
 }
 
-const TaskCreator = ({ addTask, handleChange, task, taskTypes }: Props) => {
+const TaskCreator = ({ addTask, handleChange, task, taskTypes, setTypesManager }: Props) => {
     return (
         <div className={styles.taskCreator}>
             <h2 className={styles.taskCreatorTitle}>Добавить задание</h2>
@@ -31,21 +32,24 @@ const TaskCreator = ({ addTask, handleChange, task, taskTypes }: Props) => {
                     value={task.taskType}
                     defaultValue="Тип задания"
                     items={taskTypes}
-                    handleChange={handleChange}
+                    click={handleChange}
                 />
+                <div>
+                    <a style={{cursor: 'pointer'}} onClick={() => setTypesManager(true)}>Управление типами</a>
+                </div>
                 <Toggle
                     name="repeatSpread"
                     value={task.repeatSpread}
                     defaultValue="Повтор"
                     items={repeatValues}
-                    handleChange={handleChange}
+                    click={handleChange}
                 />
                 <Toggle
                     name="repeatDays"
                     value={task.repeatDays}
                     defaultValue="Дни повтора"
                     items={weekDays}
-                    handleChange={handleChange}
+                    click={handleChange}
                 />
                 <div className={styles.taskCreatorInner}>
                     <InputItem

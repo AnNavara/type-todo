@@ -7,10 +7,11 @@ import styles from './TaskList.module.css';
 interface Props {
     taskList: ITask[];
     updateTask(taskName: string, id: number): void;
-    completeTask(event: any, taskIdToDelete: number): void;
+    completeTask(taskIdToDelete: number): void;
+    removeTask(taskIdToDelete: number): void;
 }
 
-const TaskList = ({ taskList, completeTask, updateTask }: Props) => {
+const TaskList = ({ taskList, completeTask, updateTask, removeTask }: Props) => {
     const activeTasks: ITask[] = [],
         completedTasks: ITask[] = [];
 
@@ -35,6 +36,7 @@ const TaskList = ({ taskList, completeTask, updateTask }: Props) => {
                         key={task.number}
                         task={task}
                         completeTask={completeTask}
+                        removeTask={removeTask}
                     />)
                 })}
             </section> : '' }
@@ -48,6 +50,7 @@ const TaskList = ({ taskList, completeTask, updateTask }: Props) => {
                         key={task.number}
                         task={task}
                         completeTask={completeTask}
+                        removeTask={removeTask}
                     />)
                 })}
             </section> : '' }

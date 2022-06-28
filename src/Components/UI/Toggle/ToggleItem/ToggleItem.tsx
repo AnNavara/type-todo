@@ -8,7 +8,7 @@ interface Props {
     active: boolean;
     index: number;
     indexLast: number;
-    handleChange(event: ChangeEvent<HTMLInputElement>): void;
+    click(event: ChangeEvent<HTMLInputElement>): void;
 }
 
 const ToggleItem = ({
@@ -17,7 +17,7 @@ const ToggleItem = ({
     active,
     index,
     indexLast,
-    handleChange,
+    click,
     children,
 }: Props) => {
     const cssClasses = [styles.toggleItem]
@@ -30,7 +30,7 @@ const ToggleItem = ({
             className={cssClasses.join(' ')}
             name={name}
             value={value}
-            onClick={(event: any) => handleChange(event)}>
+            onClick={(event: any) => click(event)}>
             {children}
         </button>
     );

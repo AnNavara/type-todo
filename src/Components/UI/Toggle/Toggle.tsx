@@ -7,7 +7,7 @@ interface Props {
     value: string | any[];
     defaultValue: string;
     items: any;
-    handleChange(event: ChangeEvent<HTMLInputElement>): void;
+    click(event: ChangeEvent<HTMLInputElement>): void;
 }
 
 const Toggle = ({
@@ -15,7 +15,7 @@ const Toggle = ({
     value,
     defaultValue,
     items,
-    handleChange
+    click
 }: Props) => {
 
     return (
@@ -32,7 +32,7 @@ const Toggle = ({
                     return (
                         <ToggleItem
                             key={item + index}
-                            handleChange={handleChange} 
+                            click={click} 
                             name={name}
                             value={item} 
                             active={active}

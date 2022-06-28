@@ -20,5 +20,5 @@ const weekDays = [
 export {
     DEADLINE_ALWAYS_ACTIVE,
     repeatValues,
-    weekDays
+    weekDays,
 }

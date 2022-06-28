@@ -28,13 +28,15 @@ html {
 .App {
   display: grid;
   grid-template-columns: 1fr [center-start] minmax(500px, 900px) [center-end]  1fr;
-  row-gap: 5rem;
+  row-gap: 2.5rem;
+  padding-top: 2.5rem;
 }
 
 .header {
   grid-column: center-start / center-end;
+  display: flex;
+  justify-content: flex-end;
   margin: 0 auto;
-  margin-top: 4rem;
 }
 
 .input__min { width: 9rem; }

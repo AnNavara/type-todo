@@ -68,7 +68,8 @@ const taskStatusHandler = (task: ITask): ITaskStatusResult => {
 
         if (
             task.repeatSpread === 'Еженедельно'
-            && sundayOfDateWeek(lastCompletion).getDate() < new Date().getDate()
+            && (sundayOfDateWeek(lastCompletion)).getDate() < new Date().getDate()
+            && lastCompletion.getMonth() < new Date().getMonth()
             && isTaskDayActive()
         ) active = true;
 

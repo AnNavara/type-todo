@@ -1,8 +1,15 @@
+import { DEADLINE_ALWAYS_ACTIVE, weekDays } from '../consts';
 import { ITask } from '../Interfaces';
 import { convertMsToDays } from './utils';
 
-const taskStatusHandler = (task: ITask, weekDays: any[]): any => {
-    const DEADLINE_ALWAYS_ACTIVE = 3;
+interface ITaskStatusResult {
+    active: boolean;
+    isToday(day: string): boolean;
+    deadlineDate: string;
+}
+
+const taskStatusHandler = (task: ITask): ITaskStatusResult => {
+
     let completedBefore: boolean = false;
     if (task.lastCompletion) completedBefore = true;
     let lastCompletion: Date = new Date(0);

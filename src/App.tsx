@@ -6,6 +6,7 @@ import { ITask } from './Interfaces';
 import { loadLocalStorage, saveLocalStorage } from './utils/utils';
 import TaskList from './components/TaskList/TaskList';
 import Modal from './components/UI/Modal/Modal';
+import { repeatValues, weekDays } from './consts';
 
 const App: FC = () => {
     const [ task, setTask ] = useState<ITask>({
@@ -16,6 +17,10 @@ const App: FC = () => {
         repeatSpread: '',
         repeatDays: [],
     });
+    const [ todoList, setTodoList ] = useState<ITask[]>(() => {
+        const state = loadLocalStorage('state');
+        return state ? state : [];
+    })
     const [ modal, setModal ] = useState<boolean>(false);
     const taskTypes = [
         'Курсы',
@@ -24,17 +29,7 @@ const App: FC = () => {
         'Genshin: Аяка',
         'Genshin: Рейден',
     ];
-    const repeatValues = [
-        'Не повторять',
-        'Ежедневно',
-        'Еженедельно',
-        'Ежемесячно',
-    ];
-    const weekDays = ['Пн', 'Вт', 'Ср', 'Чт', 'Пт', 'Сб', 'Вс'];
-    const [todoList, setTodoList] = useState<ITask[]>(() => {
-        const state = loadLocalStorage('state');
-        return state ? state : [];
-    })
+
     const saveState = (state: ITask[]) => (saveLocalStorage('state', state));
 
     useEffect(() => {
@@ -88,6 +83,7 @@ const App: FC = () => {
     }
 
     const addTask = (): void => {
+        console.log(task)
         const newTask = {
             taskName: task?.taskName,
             deadline: task?.deadline,
@@ -180,7 +176,6 @@ const App: FC = () => {
             <TaskList
                 updateTask={updateTask}
                 taskList={todoList}
-                weekDays={weekDays}
                 completeTask={completeTask}
             />
         </div>

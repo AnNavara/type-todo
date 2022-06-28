@@ -7,13 +7,12 @@ import styles from './Task.module.css';
 
 interface Props {
     task: ITask;
-    weekDays: any[];
     updateTask(taskName: string, id: number): void;
     completeTask(event: any, taskIdToDelete: number): void;
 }
 
-const TodoTask = ({ task, completeTask, weekDays, updateTask }: Props) => {
-    const { active, isToday, deadlineDate } = taskStatusHandler(task, weekDays);
+const TodoTask = ({ task, completeTask, updateTask }: Props) => {
+    const { active, isToday, deadlineDate } = taskStatusHandler(task);
     const [ isChanging, setIsChanging ] = useState<boolean>(false);
     const [ newTaskName, setNewTaskName ] = useState<string>(task.taskName);
 

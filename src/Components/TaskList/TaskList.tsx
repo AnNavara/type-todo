@@ -5,17 +5,16 @@ import Task from '../Task/Task';
 
 interface Props {
     taskList: ITask[];
-    weekDays: any[];
     updateTask(taskName: string, id: number): void;
     completeTask(event: any, taskIdToDelete: number): void;
 }
 
-const TaskList = ({ taskList, weekDays, completeTask, updateTask }: Props) => {
+const TaskList = ({ taskList, completeTask, updateTask }: Props) => {
     const activeTasks: ITask[] = [],
         completedTasks: ITask[] = [];
 
     taskList.sort((taskA, taskB) => taskA.number - taskB.number).forEach((task) => {
-        const { active } = taskStatusHandler(task, weekDays);
+        const { active } = taskStatusHandler(task);
         if (active) {
             activeTasks.push(task);
         } else {
@@ -32,7 +31,6 @@ const TaskList = ({ taskList, weekDays, completeTask, updateTask }: Props) => {
                 {activeTasks.map((task) => {
                     return (<Task
                         updateTask={updateTask}
-                        weekDays={weekDays}
                         key={task.number}
                         task={task}
                         completeTask={completeTask}
@@ -46,7 +44,6 @@ const TaskList = ({ taskList, weekDays, completeTask, updateTask }: Props) => {
                 {completedTasks.map((task) => {
                     return (<Task
                         updateTask={updateTask}
-                        weekDays={weekDays}
                         key={task.number}
                         task={task}
                         completeTask={completeTask}

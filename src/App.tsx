@@ -2,11 +2,11 @@ import React, { ChangeEvent, FC, useEffect, useState } from 'react';
 import './styles/App.css';
 import { ITask } from './Interfaces';
 import { loadLocalStorage, saveLocalStorage } from './utils/utils';
-import Modal from './components/UI/Modal/Modal';
-import Button from './components/UI/Button/Button';
-import TaskList from './components/TaskList/TaskList';
-import TaskCreator from './components/TaskCreator/TaskCreator';
-import TypesManager from './components/TypesManager/TypesManager';
+import Modal from './Components/UI/Modal/Modal';
+import Button from './Components/UI/Button/Button';
+import TaskList from './Components/TaskList/TaskList';
+import TaskCreator from './Components/TaskCreator/TaskCreator';
+import TypesManager from './Components/TypesManager/TypesManager';
 
 const App: FC = () => {
     const [ task, setTask ] = useState<ITask>({

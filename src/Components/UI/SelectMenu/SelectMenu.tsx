@@ -2,7 +2,6 @@ import React, { useState, ChangeEvent } from 'react';
 import SelectItem from '../SelectItem/SelectItem';
 import styles from './SelectMenu.module.css';
 import { CSSTransition } from 'react-transition-group';
-import { repeatValues } from '../../../consts';
 
 interface Props {
     name: string;
@@ -23,22 +22,11 @@ const SelectMenu = ({
 }: Props) => {
     const [isOpen, setIsOpen] = useState<Boolean>(false);
     const [menuHeight, setMenuHeight] = useState<number>(0);
-    let transformedItems: string[] = [];
 
     const calcHeight = (el: HTMLElement): void => {
         const height = el ? el.offsetHeight : 0;
         setMenuHeight(height);
     };
-
-    console.log(items);
-
-    if (!Array.isArray(items)) {
-        for (const key in items) {
-            if (Number.isInteger(Number(key))) transformedItems.push(items[key]);
-        }
-    } else {
-        transformedItems = items;
-    }
 
     const cssClasses = [styles.toggle];
     let displayValue: string = defaultValue;
@@ -73,10 +61,9 @@ const SelectMenu = ({
                     }}
                 >
                     <div className={styles.dropdown}>
-                        {transformedItems.map((item: string, index: number) => {
+                        {items.map((item: string, index: number) => {
                             let active: boolean = value === item;
-                            if (Array.isArray(value))
-                                active = value.includes(item);
+                            if (Array.isArray(value)) active = value.includes(item);
                             return (
                                 <SelectItem
                                     value={item}

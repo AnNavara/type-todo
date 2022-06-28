@@ -9,6 +9,8 @@
   --color-xlight: #F1FAEE;
   --color-accent: #E63946;
   --color-xaccent: #9b1823;
+
+  --border-radius: 4px;
 }
 
 html {

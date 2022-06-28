@@ -1,0 +1,29 @@
+.toggleItem {
+    display: flex;
+    padding: 0.5rem 0.8rem;
+    font-size: 1.5rem;
+    cursor: pointer;
+    background: transparent;
+    border: 1px solid rgba(145, 145, 145, 0.3);
+    border-left: none;
+}
+
+.toggleItem:hover {
+    background-color: var(--color-light);
+}
+
+.toggleItem.first {
+    border-left: 1px solid rgba(145, 145, 145, 0.3);
+    border-top-left-radius: var(--border-radius);
+    border-bottom-left-radius: var(--border-radius);
+}
+
+.toggleItem.last {
+    border-top-right-radius: var(--border-radius);
+    border-bottom-right-radius: var(--border-radius);
+}
+
+.toggleItem.active {
+    background-color: var(--color-accent);
+    border-color: var(--color-accent);
+}

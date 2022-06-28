@@ -9,6 +9,7 @@
     min-width: 25rem;
     padding: 2.5rem;
     background-color: var(--color-xlight);
+    border-radius: var(--border-radius);
 }
 
 .modal.active {

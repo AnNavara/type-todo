@@ -2,6 +2,7 @@ import React from 'react';
 import { ITask } from '../../Interfaces';
 import taskStatusHandler from '../../utils/taskStatusHandler';
 import Task from '../Task/Task';
+import styles from './TaskList.module.css';
 
 interface Props {
     taskList: ITask[];
@@ -26,7 +27,7 @@ const TaskList = ({ taskList, completeTask, updateTask }: Props) => {
         <>
             {activeTasks.length ? <section className="tasks-container">
                 <header>
-                    <h2>Active Tasks</h2>
+                    <h2 className={styles.taskListTitle}>Активные задания</h2>
                 </header>
                 {activeTasks.map((task) => {
                     return (<Task
@@ -39,7 +40,7 @@ const TaskList = ({ taskList, completeTask, updateTask }: Props) => {
             </section> : '' }
             {completedTasks.length ? <section className="tasks-container">
                 <header>
-                    <h2>Completed Tasks</h2>
+                    <h2 className={styles.taskListTitle}>Завершенные задания</h2>
                 </header>
                 {completedTasks.map((task) => {
                     return (<Task

@@ -17,6 +17,7 @@ const Modal = ({ children, visible, setVisible }: Props) => {
             <div className={styles.modalContent} onClick={e => e.stopPropagation()}>
                 {children}
             </div>
+            {/* <button className={styles.modalClose}>❌</button> */}
         </div>
     );
 };

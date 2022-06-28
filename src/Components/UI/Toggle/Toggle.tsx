@@ -20,7 +20,7 @@ const Toggle = ({
 
     return (
         <div className={styles.toggle}>
-            <h3>{defaultValue}</h3>
+            <h3 className={styles.toggleTitle}>{defaultValue}</h3>
             <div className={styles.toggleContainer}>
                 {items.map((item: string, index: number) => {
                     let active: boolean = false;

@@ -9,6 +9,7 @@ import Modal from './components/UI/Modal/Modal';
 import { repeatValues, weekDays } from './consts';
 import Button from './components/UI/Button/Button';
 import Toggle from './components/UI/Toggle/Toggle';
+import TaskCreator from './components/TaskCreator/TaskCreator';
 
 const App: FC = () => {
     const [ task, setTask ] = useState<ITask>({
@@ -39,8 +40,6 @@ const App: FC = () => {
     }, [todoList]);
 
     const handleChange = (event: ChangeEvent<HTMLInputElement>): void => {
-        console.log('handling change')
-        console.log(event)
         const newTask = {
             ...task,
         };
@@ -87,7 +86,6 @@ const App: FC = () => {
     }
 
     const addTask = (): void => {
-        console.log(task)
         const newTask = {
             taskName: task?.taskName,
             deadline: task?.deadline,
@@ -144,51 +142,12 @@ const App: FC = () => {
                 <div>|<b>*Toggle*</b>| Темная тема | Светлая тема</div>
             </header>
             <Modal visible={modal} setVisible={setModal}>
-                <div>
-                    <h2>Добавить задание</h2>
-                    <div>
-                        <InputItem
-                            className="task__name"
-                            type="text"
-                            name="taskName"
-                            placeholder="Задание"
-                            addTask={addTask}
-                            handleChange={handleChange}
-                        />
-                        <Toggle 
-                            name="taskType"
-                            value={task.taskType} 
-                            defaultValue="Тип задания"
-                            items={taskTypes} 
-                            handleChange={handleChange} 
-                        />
-                        <Toggle 
-                            name="repeatSpread" 
-                            value={task.repeatSpread}
-                            defaultValue="Повтор"
-                            items={repeatValues} 
-                            handleChange={handleChange} 
-                        />
-                        <Toggle 
-                            name="repeatDays" 
-                            value={task.repeatDays}
-                            defaultValue="Дни повтора"
-                            items={weekDays} 
-                            handleChange={handleChange} 
-                        />
-                        <InputItem
-                            className="input__min"
-                            type="number"
-                            name="deadline"
-                            placeholder="Deadline"
-                            min="0"
-                            handleChange={handleChange}
-                        />
-                        <button className="task__submit" onClick={addTask}>
-                            Добавить задание
-                        </button>
-                    </div>
-                </div>
+                <TaskCreator 
+                    addTask={addTask}
+                    handleChange={handleChange}
+                    taskTypes={taskTypes}
+                    task={task}           
+                />
             </Modal>
 
             <TaskList

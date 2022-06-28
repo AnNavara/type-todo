@@ -2,15 +2,18 @@
     display: flex;
     padding: 1rem;
     width: 79rem;
-    background-color: var(--color-light);
     justify-content: space-between;
     align-items: center;
-    column-gap: 3rem;
-    font-size: 1.2rem;
+    column-gap: 1rem;
+    font-size: 1.6rem;
+    border: 1px solid var(--color-xlight);
+    border-bottom: 3px solid var(--color-xlight);
+    border-radius: var(--border-radius);
+    box-shadow: 1px 3px 5px rgba(125, 155, 152, 0.3);
 }
 
 .active {
-    background-color: var(--color-light-accent);
+    border-bottom: 2px solid var(--color-light-accent);
 }
 
 .task header {
@@ -21,53 +24,56 @@
 
 .task h3 {
     margin: 0;
-    padding-block: 0.5rem;
-    color: var(--color-xlight);
+    padding-block: 0.6rem;
+    color: var(--color-xdark);
     font-weight: 300;
-    font-size: 2.6rem;
+    font-size: 2.4rem;
     line-height: 1;
     cursor: pointer;
 }
 
 span {
     padding-left: 0.1em;
-    font-size: inherit;
+    font-size: 1.2rem;
     color: inherit;
 }
 
 .repeat {
-    padding-top: 0.6rem;
     font-size: 1.6rem;
     margin-left: auto;
-    align-self: flex-start;
     justify-self: flex-end;
     color: #1D3557;
 }
 
 .repeatToday {
-    color: var(--color-xlight);
+    color: var(--color-xdark);
     font-weight: 600;
 }
 
 .btn {
-    align-self: start;
     flex-shrink: 0;
     border: none;
     cursor: pointer;
     width: 4rem;
     height: 4rem;
-    color: var(--color-xlight);
+    color: var(--color-xdark);
+    font-weight: 600;
+    font-size: 1.4rem;
     transition: background-color .2s ease-in-out;
-    background-color: var(--color-dark);
+    background-color: transparent;
+    border: 1px solid var(--color-xdark);
+    border-radius: var(--border-radius);
 }
 
 .btn:hover {
-    background-color: var(--color-xaccent);
+    background-color: var(--color-light-accent);
+    border-color: var(--color-light-accent);
 }
 
 .editContainer {
     height: 3.6rem;
     display: flex;
+    gap: 0.6rem;
     justify-items: stretch;
     align-items: stretch;
 }

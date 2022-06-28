@@ -6,10 +6,24 @@
 }
 
 .modalContent {
+    position: relative;
     min-width: 25rem;
     padding: 2.5rem;
-    background-color: var(--color-xlight);
+    background-color: #fff;
     border-radius: var(--border-radius);
+}
+
+.modalClose {
+    position: absolute;
+    right: 0;
+    top: 0;
+    padding: 0;
+    height: 4rem;
+    width: 4rem;
+    color: var(--color-xdark);
+    border: none;
+    background-color: transparent;
+    cursor: pointer;
 }
 
 .modal.active {

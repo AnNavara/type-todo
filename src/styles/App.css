@@ -11,6 +11,7 @@
   --color-xaccent: #9b1823;
 
   --border-radius: 4px;
+  --transition-time: 0.15s;
 }
 
 html {
@@ -21,7 +22,7 @@ html {
 #root {
   padding-bottom: 2rem;
   min-height: calc(100vh - 2rem);
-  background-color: var(--color-xlight);
+  background-color: #fff;
 }
 
 .App {

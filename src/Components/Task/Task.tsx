@@ -53,7 +53,8 @@ const TodoTask = ({ task, completeTask, updateTask }: Props) => {
                     return <span key={day + task.number} className={isToday(day) ? styles.repeatToday : ''}>{day} &nbsp;</span>
                 }) : ''}
             </div>
-            <button className={styles.btn} onClick={(event) => completeTask(event, task.number)}>X</button>
+            {active ? <button className={styles.btn} onClick={(event) => completeTask(event, task.number)}>✔️</button> : ''}
+            <button className={styles.btn} onClick={(event) => completeTask(event, task.number)}>❌</button>
         </section>
     )
 };

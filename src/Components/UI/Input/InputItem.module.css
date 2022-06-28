@@ -1,17 +1,19 @@
 .input {
-    font-size: 1.6rem;
     padding: 0.9rem 1rem;
-    color: var(--color-xlight);
+    color: var(--color-dark);
     border: none;
     outline: none;
-    background-color: var(--color-dark);
+    font-size: inherit;
+    background-color: transparent;
     transition: all 0.15s ease-in-out;
+    border: 1px solid rgba(145, 145, 145, 0.3);
+    border-radius: var(--border-radius);
 }
 
 .input:hover {
-    background-color: var(--color-xdark);
+    background-color: var(--color-xlight);
 }
 
 .input::placeholder {
-    color: #f1faee8f;
+    color: var(--color-dark);
 }

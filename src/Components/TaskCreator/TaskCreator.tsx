@@ -1,4 +1,4 @@
-import React, { ChangeEvent, useState } from 'react';
+import React, { ChangeEvent } from 'react';
 import { repeatValues, weekDays } from '../../consts';
 import { ITask } from '../../Interfaces';
 import Button from '../UI/Button/Button';
@@ -35,7 +35,7 @@ const TaskCreator = ({ addTask, handleChange, task, taskTypes, setTypesManager }
                     click={handleChange}
                 />
                 <div>
-                    <a style={{cursor: 'pointer'}} onClick={() => setTypesManager(true)}>Управление типами</a>
+                    <span style={{cursor: 'pointer'}} onClick={() => setTypesManager(true)}>Управление типами</span>
                 </div>
                 <Toggle
                     name="repeatSpread"

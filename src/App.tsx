@@ -4,9 +4,9 @@ import { ITask } from './Interfaces';
 import { loadLocalStorage, saveLocalStorage } from './utils/utils';
 import Modal from './components/UI/Modal/Modal';
 import Button from './components/UI/Button/Button';
+import TaskList from './components/TaskList/TaskList';
 import TaskCreator from './components/TaskCreator/TaskCreator';
 import TypesManager from './components/TypesManager/TypesManager';
-import TaskList from './components/TaskList/TaskList';
 
 const App: FC = () => {
     const [ task, setTask ] = useState<ITask>({

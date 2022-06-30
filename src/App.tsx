@@ -1,4 +1,4 @@
-import React, { ChangeEvent, FC, useEffect, useState } from 'react';
+import React, { ChangeEvent, FC, useState } from 'react';
 import './styles/App.css';
 import { ITask } from './Interfaces';
 import Modal from './Components/UI/Modal/Modal';

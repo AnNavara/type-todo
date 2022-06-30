@@ -5,7 +5,6 @@ import Modal from './Components/UI/Modal/Modal';
 import Button from './Components/UI/Button/Button';
 import TaskList from './Components/TaskList/TaskList';
 import TaskCreator from './Components/TaskCreator/TaskCreator';
-import TypesManager from './Components/TypesManager/TypesManager';
 import useLocalStorage from './hooks/useLocalStorage';
 
 const App: FC = () => {
@@ -17,10 +16,12 @@ const App: FC = () => {
         repeatSpread: '',
         repeatDays: [],
     });
-    const [todoList, setTodoList] = useLocalStorage<ITask[]>('state', [])
+    const [todoList, setTodoList] = useLocalStorage<ITask[]>('state', []);
     const [modal, setModal] = useState<boolean>(false);
-    const [taskTypes, setTaskTypes] = useLocalStorage<string[]>('taskTypes', []);
-    const [typesManager, setTypesManager] = useState<boolean>(false);
+    const [taskTypes, setTaskTypes] = useLocalStorage<string[]>(
+        'taskTypes',
+        []
+    );
 
     const handleChange = (event: ChangeEvent<HTMLInputElement>): void => {
         const newTask = {
@@ -139,27 +140,20 @@ const App: FC = () => {
         <div className="App">
             <React.StrictMode>
                 <header className="header">
-                    <Button click={setModal}>Добавить задание</Button>
+                    <Button click={() => setModal(true)}>
+                        Добавить задание
+                    </Button>
                 </header>
-                <Modal visible={modal} setVisible={setModal}>
-                    {typesManager ? (
-                        <TypesManager
-                            addType={addType}
-                            removeType={removeType}
-                            taskTypes={taskTypes}
-                            setTypesManager={setTypesManager}
-                        />
-                    ) : (
-                        <TaskCreator
-                            setTypesManager={setTypesManager}
-                            addTask={addTask}
-                            handleChange={handleChange}
-                            taskTypes={taskTypes}
-                            task={task}
-                        />
-                    )}
-                </Modal>
-
+                {modal && <Modal visible={modal} setVisible={setModal}>
+                    <TaskCreator
+                        addType={addType}
+                        removeType={removeType}
+                        addTask={addTask}
+                        handleChange={handleChange}
+                        taskTypes={taskTypes}
+                        task={task}
+                    />
+                </Modal>}
                 <TaskList
                     updateTask={updateTask}
                     taskList={todoList}

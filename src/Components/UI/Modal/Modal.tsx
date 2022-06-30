@@ -1,5 +1,6 @@
-import React from 'react';
+import React, { useEffect, useState } from 'react';
 import styles from './Modal.module.css';
+import { CSSTransition } from 'react-transition-group';
 
 type Props = {
     children: any;
@@ -8,17 +9,39 @@ type Props = {
 };
 
 const Modal = ({ children, visible, setVisible }: Props) => {
-
-    const rootClasses = [styles.modal];
-    if (visible) rootClasses.push(styles.active);
+    const [selfVisible, setSelfVisible] = useState<boolean>(false);
+    const [entering, setEntering] = useState<boolean>(false);
+    useEffect(() => {
+        if (!entering) setSelfVisible(true);
+    }, [visible, entering])
 
     return (
-        <div className={rootClasses.join(' ')} onClick={() => setVisible(false)}>
-            <div className={styles.modalContent} onClick={e => e.stopPropagation()}>
-                {children}
+        <CSSTransition
+            in={selfVisible}
+            timeout={300}
+            onEnter={() => setEntering(true)}
+            onEntered={() => setEntering(false)}
+            onExited={() => setVisible(false)}
+            classNames={{
+                enterDone: styles['modal-active'],
+                enter: styles['modal-enter'],
+                enterActive: styles['modal-enter-active'],
+                exit: styles['modal-exit'],
+                exitActive: styles['modal-exit-active'],
+            }}
+        >
+            <div
+                className={styles.modal}
+                onClick={() => setSelfVisible(false)}
+            >
+                    <div
+                        className={styles.modalContent}
+                        onClick={(e) => e.stopPropagation()}
+                    >
+                        {children}
+                    </div>
             </div>
-            {/* <button className={styles.modalClose}>❌</button> */}
-        </div>
+        </CSSTransition>
     );
 };
 

@@ -1,4 +1,4 @@
-import { DEADLINE_ALWAYS_ACTIVE, weekDays } from '../consts';
+import { DEADLINE_ALWAYS_ACTIVE, weekDays } from './consts';
 import { ITask } from '../Interfaces';
 import { convertMsToDays } from './utils';
 

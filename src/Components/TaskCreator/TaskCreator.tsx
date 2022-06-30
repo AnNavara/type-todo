@@ -1,5 +1,5 @@
 import React, { ChangeEvent } from 'react';
-import { repeatValues, weekDays } from '../../consts';
+import { repeatValues, weekDays } from '../../utils/consts';
 import { ITask } from '../../Interfaces';
 import Button from '../UI/Button/Button';
 import InputItem from '../UI/Input/InputItem';

@@ -4,13 +4,13 @@ import InputItem from '../UI/Input/InputItem';
 import styles from './TypesManager.module.css';
 
 interface Props {
-    types: string[];
+    taskTypes: string[];
     setTypesManager(status: boolean): void;
     addType(type: string): void;
     removeType(type: string): void;
 }
 
-const TypesManager = ({ types, setTypesManager, addType, removeType }: Props) => {
+const TypesManager = ({ taskTypes, setTypesManager, addType, removeType }: Props) => {
     const [ newType, setNewType ] = useState<string>('');
     const setTypes = () => {
         addType(newType);
@@ -25,7 +25,7 @@ const TypesManager = ({ types, setTypesManager, addType, removeType }: Props) =>
                 <h2 className={styles.typesManagerTitle}>Управление типам заданий</h2>
                 <Button mod='transparent' click={() => setTypesManager(false)}>Назад</Button>
             </div>
-            {types.map((type: string, index: number) => {
+            {taskTypes.map((type: string, index: number) => {
                 return (
                     <div className={styles.typesManagerItem} key={type + index}>
                         <p>{type}</p>

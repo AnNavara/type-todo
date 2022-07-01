@@ -61,15 +61,13 @@ const taskStatusHandler = (task: ITask): ITaskStatusResult => {
         // task active if it have to be repeated everyday
         // wasn't completed today and today is active day for the task
         if (task.repeatSpread === 'Ежедневно'
-            && lastCompletion.getDay() !== new Date().getDay()
-            && lastCompletion.getMonth() <= new Date().getMonth()
+            && lastCompletion < new Date()
             && isTaskDayActive()
         ) active = true;
 
         if (
             task.repeatSpread === 'Еженедельно'
-            && ((sundayOfDateWeek(lastCompletion)).getDate() < new Date().getDate()
-            || lastCompletion.getMonth() < new Date().getMonth())
+            && sundayOfDateWeek(lastCompletion) < new Date()
             && isTaskDayActive()
         ) active = true;
 

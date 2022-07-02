@@ -50,9 +50,9 @@ const taskStatusHandler = (task: ITask): ITaskStatusResult => {
         const lastDayOfMonth: number = (new Date(date.getFullYear(), date.getMonth() + 1, 0)).getDate();
 
         if (sundayDate > lastDayOfMonth && date.getMonth() === DECEMBER) {
-            sunday = new Date(date.getFullYear() + 1, JUNUARY, sundayDate - date.getDate() + 1);
+            sunday = new Date(date.getFullYear() + 1, JUNUARY, sundayDate - lastDayOfMonth + 1);
         } else if (sundayDate > lastDayOfMonth) {
-            sunday = new Date(date.getFullYear(), date.getMonth() + 1, lastDayOfMonth - date.getDate() + 1);
+            sunday = new Date(date.getFullYear(), date.getMonth() + 1, sundayDate - lastDayOfMonth + 1);
         } else {
             sunday = new Date(date.getFullYear(), date.getMonth(), sundayDate);
         }
@@ -77,7 +77,7 @@ const taskStatusHandler = (task: ITask): ITaskStatusResult => {
 
         if (
             task.repeatSpread === 'Еженедельно'
-            && sundayOfDateWeek(lastCompletion) < new Date()
+            && sundayOfDateWeek(lastCompletion) <= new Date()
             && isTaskDayActive()
         ) active = true;
 

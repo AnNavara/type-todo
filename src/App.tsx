@@ -16,6 +16,7 @@ const App: FC = () => {
         repeatSpread: '',
         repeatDays: [],
     });
+    const [taskError, setTaskError] = useState<boolean>(false);
     const [todoList, setTodoList] = useLocalStorage<ITask[]>('state', []);
     const [modal, setModal] = useState<boolean>(false);
     const [taskTypes, setTaskTypes] = useLocalStorage<string[]>(
@@ -113,13 +114,10 @@ const App: FC = () => {
         };
         if (validateTask(newTask)) {
             setTodoList([...todoList, newTask]);
+            setTaskError(false);
             setModal(false);
         } else {
-            //
-            //
-            // SHOW ERROR
-            //
-            //
+            setTaskError(true);
             console.warn('Task invalid');
         }
     };
@@ -145,6 +143,7 @@ const App: FC = () => {
                     </Button>
                 </header>
                 {modal && <Modal visible={modal} setVisible={setModal}>
+                    {taskError && 'В задании ошибка'}
                     <TaskCreator
                         addType={addType}
                         removeType={removeType}

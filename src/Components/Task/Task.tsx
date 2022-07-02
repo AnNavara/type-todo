@@ -4,6 +4,7 @@ import taskStatusHandler from '../../utils/taskStatusHandler';
 import Button from '../UI/Button/Button';
 import InputItem from '../UI/Input/InputItem';
 import styles from './Task.module.css';
+import {ReactComponent as IconConfirm} from './assets/check-mark-svgrepo-com.svg';
 
 interface Props {
     task: ITask;
@@ -43,7 +44,7 @@ const TodoTask = ({ task, completeTask, updateTask, removeTask }: Props) => {
                             placeholder={task.taskName}
                             handleChange={handleChange}
                         />
-                        <Button click={editTask}>✔️</Button>
+                        <Button click={editTask}><IconConfirm className={styles.svgIcon} /></Button>
                     </div>
                     : <h3 onClick={() => setIsChanging(true)}>{task.taskName}</h3>
                 }
@@ -54,8 +55,11 @@ const TodoTask = ({ task, completeTask, updateTask, removeTask }: Props) => {
                     return <span key={day + task.number} className={isToday(day) ? styles.repeatToday : ''}>{day} &nbsp;</span>
                 }) : ''}
             </div>
-            {active ? <button className={styles.btn} onClick={(event) => completeTask(task.number)}>✔️</button> : ''}
-            <button className={styles.btn} onClick={(event) => removeTask(task.number)}>❌</button>
+            {active 
+                && <button className={[styles.btn, styles.btnComplete].join(' ')} onClick={(event) => completeTask(task.number)}>
+                    <span><IconConfirm className={styles.svgIcon} /></span>
+                </button>}
+            <button className={[styles.btn, styles.btnRemove].join(' ')} onClick={(event) => removeTask(task.number)}><span>❌</span></button>
         </section>
     )
 };

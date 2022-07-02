@@ -2,6 +2,8 @@
     margin: 0;
     margin-bottom: 1.8rem;
     font-size: 2.4rem;
+    color: rgb(248 250 252);
+    text-shadow: var(--text-shadow);
     text-align: left;
     font-weight: 500;
 }

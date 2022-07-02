@@ -10,8 +10,15 @@
   --color-accent: #E63946;
   --color-xaccent: #9b1823;
 
+  --text-shadow: 1px 1px 0.15em var(--color-xdark);
+  --text-shadow-light: 1px 1px 0.09em var(--text-white);
+  --box-shadow: rgba(0, 0, 0, 0.1) 0px 1px 3px 0px, rgba(0, 0, 0, 0.06) 0px 1px 2px 0px;
+  --text-white: rgb(248 250 252);
   --border-radius: 4px;
   --transition-time: 0.15s;
+  --bg-gradient: linear-gradient(140deg, rgba(183,229,231,1) 0%, rgba(144,176,221,1) 47%, rgba(246,83,95,1) 100%);
+  --bg-gradient-confirm: linear-gradient(245deg, rgba(134,226,123,1) 0%, rgba(75,159,120,1) 100%);
+  --bg-gradient-cancel: linear-gradient(140deg, rgba(204,70,86,1) 0%, rgba(191,8,24,1) 100%);
 }
 
 html {
@@ -23,20 +30,25 @@ html {
   padding-bottom: 2rem;
   min-height: calc(100vh - 2rem);
   background-color: #fff;
+  background: rgb(183,229,231);
+  background: var(--bg-gradient);
 }
 
 .App {
   display: grid;
   grid-template-columns: 1fr [center-start] minmax(500px, 900px) [center-end]  1fr;
   row-gap: 2.5rem;
-  padding-top: 2.5rem;
+  padding-top: 4.5rem;
 }
 
 .header {
   grid-column: center-start / center-end;
   display: flex;
   justify-content: flex-end;
+  color: var(--text-white);
+  text-shadow: var(--text-shadow);
   margin: 0 auto;
+  margin-bottom: 2rem;
 }
 
 .input__min { width: 9rem; }

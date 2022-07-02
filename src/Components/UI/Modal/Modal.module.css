@@ -7,13 +7,17 @@
     align-items: center;
     opacity: 0;
     cursor: pointer;
+    z-index: 100;
+    color: var(--color-xdark);
+    font-size: 1.6rem;
 }
 
 .modalContent {
     position: relative;
     min-width: 25rem;
-    padding: 2.5rem;
-    background-color: #fff;
+    padding-block: 3.7rem;
+    padding-inline: 3rem;
+    background-color: rgba(240, 240, 240, 0.95);
     border-radius: var(--border-radius);
     cursor: auto;
 }

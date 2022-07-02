@@ -12,8 +12,8 @@ const Button = ({ children, click, mod, ...props }: Props) => {
     if (mod === 'transparent') cssStyles.push(styles.transparent)
     return (
         <button onClick={click} className={cssStyles.join(' ')}>
-            {children}
-            </button>
+            <span>{children}</span>
+        </button>
     );
 };
 

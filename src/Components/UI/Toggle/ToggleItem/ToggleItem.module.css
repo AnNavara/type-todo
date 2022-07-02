@@ -3,14 +3,17 @@
     padding: 0.5rem 0.8rem;
     font-size: 1.5rem;
     cursor: pointer;
-    background: transparent;
     border: 1px solid rgba(145, 145, 145, 0.3);
+    box-shadow: var(--box-shadow);
+    background-color: rgba(255, 255, 255, 0.15);
     border-left: none;
     transition: all var(--transition-time) ease-in-out;
 }
 
 .toggleItem:hover {
-    background-color: var(--color-xlight);
+    border: 1px solid rgba(145, 145, 145, 0.4);
+    border-left: none;
+    background-color: rgba(255, 255, 255, 0.7);
 }
 
 .toggleItem.first {
@@ -26,6 +29,6 @@
 
 .toggleItem.active {
     color: var(--color-xlight);
-    background-color: var(--color-light-accent);
-    border-color: var(--color-light-accent);
+    background: rgb(89, 184, 78);
+    border-color: rgb(75, 165, 65);
 }

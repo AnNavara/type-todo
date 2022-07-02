@@ -1,17 +1,22 @@
 .input {
     padding: 0.9rem 1rem;
-    color: var(--color-dark);
-    border: none;
     outline: none;
     font-size: inherit;
+    color: currentColor;
+    font-weight: 500;
+    text-shadow: inherit;
     background-color: transparent;
-    transition: all 0.15s ease-in-out;
-    border: 1px solid rgba(145, 145, 145, 0.3);
+    border: 1px solid transparent;
     border-radius: var(--border-radius);
+    box-shadow: var(--box-shadow);
+    background-color: rgba(255, 255, 255, 0.15);
+    transition: all 0.3s ease-in-out;
 }
 
-.input:hover {
-    background-color: var(--color-xlight);
+.input:hover,
+.input:focus {
+    border: 1px solid rgba(255, 255, 255, 0.5);
+    background-color: rgba(255, 255, 255, 0.3);
 }
 
 .input::placeholder {

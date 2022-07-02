@@ -52,12 +52,11 @@ const TaskCreator = ({
                     click={handleChange}
                 />
                 <div>
-                    <span
-                        style={{ cursor: 'pointer' }}
-                        onClick={() => setTypesManager(true)}
+                    <Button
+                        click={() => setTypesManager(true)}
                     >
                         Управление типами
-                    </span>
+                    </Button>
                 </div>
                 <Toggle
                     name="repeatSpread"

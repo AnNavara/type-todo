@@ -40,12 +40,22 @@ const taskStatusHandler = (task: ITask): ITaskStatusResult => {
     // Week Handling
     //
     const sundayOfDateWeek = (date: Date): Date => {
-        const SUNDAY_DAY = 6;
+        const DECEMBER = 11 as const;
+        const JUNUARY = 0 as const;
+        const SUNDAY_DAY = 0 as const;
+        const DAYS_IN_WEEK = 7 as const;
+        let sunday: Date;
         if (date.getDay() === SUNDAY_DAY) return date;
-        const dateDiff = SUNDAY_DAY - date.getDay();
-        const sundayDate = date.getDate() + dateDiff;
-        const sunday = new Date(date);
-        sunday.setDate(sundayDate);
+        const sundayDate: number = date.getDate() + DAYS_IN_WEEK - date.getDay();
+        const lastDayOfMonth: number = (new Date(date.getFullYear(), date.getMonth() + 1, 0)).getDate();
+
+        if (sundayDate > lastDayOfMonth && date.getMonth() === DECEMBER) {
+            sunday = new Date(date.getFullYear() + 1, JUNUARY, sundayDate - date.getDate() + 1);
+        } else if (sundayDate > lastDayOfMonth) {
+            sunday = new Date(date.getFullYear(), date.getMonth() + 1, lastDayOfMonth - date.getDate() + 1);
+        } else {
+            sunday = new Date(date.getFullYear(), date.getMonth(), sundayDate);
+        }
         return sunday;
     }
 

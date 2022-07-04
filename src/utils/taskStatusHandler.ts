@@ -36,6 +36,20 @@ const taskStatusHandler = (task: ITask): ITaskStatusResult => {
         return activeDay;
     };
 
+    const isLastYear = (): boolean => {
+        return lastCompletion.getFullYear() <= (new Date()).getFullYear()
+    }
+
+    const isLastMonth = (): boolean => {
+        return isLastYear() && lastCompletion.getMonth() <= (new Date()).getMonth()
+    }
+
+    const isYesturday = (): boolean => {
+        return isLastYear()
+        && isLastMonth()
+        && lastCompletion.getDate() < (new Date()).getDate()
+    }
+
     //
     // Week Handling
     //
@@ -71,9 +85,12 @@ const taskStatusHandler = (task: ITask): ITaskStatusResult => {
         // task active if it have to be repeated everyday
         // wasn't completed today and today is active day for the task
         if (task.repeatSpread === 'Ежедневно'
-            && lastCompletion < new Date()
+            && isYesturday()
             && isTaskDayActive()
-        ) active = true;
+        ) {
+            console.log((new Date()).getDate())
+            active = true;
+        }
 
         if (
             task.repeatSpread === 'Еженедельно'

@@ -1,26 +1,20 @@
-import React, { useEffect, useState } from 'react';
 import styles from './Modal.module.css';
 import { CSSTransition } from 'react-transition-group';
 
 type Props = {
     children: any;
     visible: boolean;
+    timing: number;
     setVisible(arg0: boolean): void;
 };
 
-const Modal = ({ children, visible, setVisible }: Props) => {
-    const [selfVisible, setSelfVisible] = useState<boolean>(false);
-    const [entering, setEntering] = useState<boolean>(false);
-    useEffect(() => {
-        if (!entering) setSelfVisible(true);
-    }, [visible, entering])
-
+const Modal = ({ children, visible, timing, setVisible }: Props) => {
     return (
         <CSSTransition
-            in={selfVisible}
-            timeout={300}
-            onEnter={() => setEntering(true)}
-            onEntered={() => setEntering(false)}
+            in={visible}
+            timeout={timing}
+            mountOnEnter
+            unmountOnExit
             onExited={() => setVisible(false)}
             classNames={{
                 enterDone: styles['modal-active'],
@@ -32,7 +26,7 @@ const Modal = ({ children, visible, setVisible }: Props) => {
         >
             <div
                 className={styles.modal}
-                onClick={() => setSelfVisible(false)}
+                onClick={() => setVisible(false)}
             >
                     <div
                         className={styles.modalContent}

@@ -6,6 +6,7 @@ import Button from './Components/UI/Button/Button';
 import TaskList from './Components/TaskList/TaskList';
 import TaskCreator from './Components/TaskCreator/TaskCreator';
 import useLocalStorage from './hooks/useLocalStorage';
+import { ANIMATION_DURATION } from './utils/consts';
 
 const App: FC = () => {
     const [task, setTask] = useState<ITask>({
@@ -138,13 +139,13 @@ const App: FC = () => {
         <div className="App">
             <React.StrictMode>
                 <header className="header">
-                    <Button click={() => setModal(true)}>
+                    <Button click={() => setModal(prevState => !prevState)}>
                         Добавить задание
                     </Button>
                 </header>
-                {modal && <Modal visible={modal} setVisible={setModal}>
-                    {taskError && 'В задании ошибка'}
+                <Modal timing={ANIMATION_DURATION} visible={modal} setVisible={setModal}>
                     <TaskCreator
+                        error={taskError}
                         addType={addType}
                         removeType={removeType}
                         addTask={addTask}
@@ -152,7 +153,7 @@ const App: FC = () => {
                         taskTypes={taskTypes}
                         task={task}
                     />
-                </Modal>}
+                </Modal>
                 <TaskList
                     updateTask={updateTask}
                     taskList={todoList}

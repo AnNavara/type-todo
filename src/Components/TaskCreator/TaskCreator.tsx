@@ -12,6 +12,7 @@ interface Props {
     handleChange(event: ChangeEvent<HTMLInputElement>): void;
     taskTypes: string[];
     task: ITask;
+    error: boolean;
     addType(type: string): void;
     removeType(type: string): void;
 }
@@ -21,6 +22,7 @@ const TaskCreator = ({
     handleChange,
     task,
     taskTypes,
+    error,
     addType,
     removeType,
 }: Props) => {
@@ -35,6 +37,7 @@ const TaskCreator = ({
     ) : (
         <div className={styles.taskCreator}>
             <h2 className={styles.taskCreatorTitle}>Добавить задание</h2>
+            {error && <p>В задании ошибка</p>}
             <div className={styles.taskCreatorWrapper}>
                 <InputItem
                     className="task__name"
@@ -42,6 +45,7 @@ const TaskCreator = ({
                     name="taskName"
                     placeholder="Задание"
                     addTask={addTask}
+                    value={task.taskName}
                     handleChange={handleChange}
                 />
                 <Toggle

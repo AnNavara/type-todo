@@ -1,4 +1,5 @@
 const DEADLINE_ALWAYS_ACTIVE = 3;
+const ANIMATION_DURATION = 300;
 
 const repeatValues = [
     'Не повторять',
@@ -19,6 +20,7 @@ const weekDays = [
 
 export {
     DEADLINE_ALWAYS_ACTIVE,
+    ANIMATION_DURATION,
     repeatValues,
     weekDays,
 }

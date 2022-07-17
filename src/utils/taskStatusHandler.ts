@@ -8,7 +8,7 @@ interface ITaskStatusResult {
     deadlineDate: string;
 }
 
-const taskStatusHandler = (task: ITask): ITaskStatusResult => {
+const taskStatusHandler = (task: ITask, today = (new Date())): ITaskStatusResult => {
 
     let completedBefore: boolean = false;
     if (task.lastCompletion) completedBefore = true;
@@ -21,7 +21,7 @@ const taskStatusHandler = (task: ITask): ITaskStatusResult => {
     //
     // is input day of the week is today
     const isToday = (day: string): boolean => {
-        return new Date().getDay() === weekDays.indexOf(day) + 1;
+        return today.getDay() === weekDays.indexOf(day) + 1;
     };
     // is Task active days contains today
     const isTaskDayActive = (): boolean => {
@@ -37,17 +37,17 @@ const taskStatusHandler = (task: ITask): ITaskStatusResult => {
     };
 
     const isLastYear = (): boolean => {
-        return lastCompletion.getFullYear() <= (new Date()).getFullYear()
+        return lastCompletion.getFullYear() <= today.getFullYear()
     }
 
     const isLastMonth = (): boolean => {
-        return isLastYear() && lastCompletion.getMonth() <= (new Date()).getMonth()
+        return isLastYear() && lastCompletion.getMonth() <= today.getMonth()
     }
 
     const isYesturday = (): boolean => {
         return isLastYear()
         && isLastMonth()
-        && lastCompletion.getDate() < (new Date()).getDate()
+        && lastCompletion.getDate() < today.getDate()
     }
 
     //
@@ -68,7 +68,7 @@ const taskStatusHandler = (task: ITask): ITaskStatusResult => {
         } else if (sundayDate > lastDayOfMonth) {
             sunday = new Date(date.getFullYear(), date.getMonth() + 1, sundayDate - lastDayOfMonth + 1);
         } else {
-            sunday = new Date(date.getFullYear(), date.getMonth(), sundayDate);
+            sunday = new Date(date.getFullYear(), date.getMonth(), sundayDate + 1);
         }
         return sunday;
     }
@@ -88,20 +88,19 @@ const taskStatusHandler = (task: ITask): ITaskStatusResult => {
             && isYesturday()
             && isTaskDayActive()
         ) {
-            console.log((new Date()).getDate())
             active = true;
         }
 
         if (
             task.repeatSpread === 'Еженедельно'
-            && sundayOfDateWeek(lastCompletion) <= new Date()
+            && sundayOfDateWeek(lastCompletion) < today
             && isTaskDayActive()
         ) active = true;
 
         if (
             task.repeatSpread === 'Ежемесячно'
-            && (lastCompletion.getMonth() < new Date().getMonth()
-            || lastCompletion.getFullYear() < new Date().getFullYear())
+            && (lastCompletion.getMonth() < today.getMonth()
+            || lastCompletion.getFullYear() < today.getFullYear())
             && isTaskDayActive()
         ) active = true;
     }
@@ -120,7 +119,7 @@ const taskStatusHandler = (task: ITask): ITaskStatusResult => {
 
         // Task allways active if deadline approaching
         if (
-            convertMsToDays(deadline.getTime() - new Date().getTime()) <= DEADLINE_ALWAYS_ACTIVE
+            convertMsToDays(deadline.getTime() - today.getTime()) <= DEADLINE_ALWAYS_ACTIVE
             && task.deadline !== 0
         ) active = true;
     }

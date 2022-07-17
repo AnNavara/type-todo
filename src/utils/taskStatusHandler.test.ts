@@ -80,9 +80,9 @@ const dateWeeklySOMMonActive = '2022-07-04T08:29:38.541Z';
 const dateWeeklySOMSun = '2022-07-03T06:29:38.541Z';
 const dateWeeklySOMSunActive = '2022-07-10T06:29:38.541Z';
 
-// 
+//
 // Monthly Tasks
-// 
+//
 const taskMonth = {
     taskName: '',
     deadline: 0,
@@ -137,8 +137,7 @@ describe('Not completed', () => {
         );
         expect(active).toBe(true);
     });
-})
-
+});
 
 describe('Daily completed before', () => {
     it('Today active completed', () => {
@@ -162,7 +161,7 @@ describe('Daily completed before', () => {
         );
         expect(active).toBe(true);
     });
-})
+});
 
 describe('Weekly status', () => {
     it('Inactive monday', () => {
@@ -250,10 +249,7 @@ describe('Monthly status', () => {
     });
 
     it('Inactive month', () => {
-        const { active } = taskStatusHandler(
-            taskMonth,
-            new Date(dateMonth)
-        );
+        const { active } = taskStatusHandler(taskMonth, new Date(dateMonth));
         expect(active).toBe(false);
     });
 
@@ -261,6 +257,43 @@ describe('Monthly status', () => {
         const { active } = taskStatusHandler(
             taskMonthEoY,
             new Date(dateMonthEoY)
+        );
+        expect(active).toBe(true);
+    });
+});
+
+const testCase = {
+    date: '2022-07-06T11:23:58.076Z',
+    deadline: 0,
+    number: 1657106638076,
+    repeatDays: ['Вт', 'Пт', 'Вс'],
+    repeatSpread: 'Ежедневно',
+    taskName: '18',
+    taskType: 'G',
+};
+const dateTestCase = '2022-07-17T11:23:58.076Z';
+
+const testCase1 = {
+    date: '2022-07-06T11:28:21.438Z',
+    deadline: 0,
+    lastCompletion: '2022-07-06T12:13:02.323Z',
+    number: 1657106901438,
+    repeatDays: ['Пн', 'Чт', 'Вс'],
+    repeatSpread: 'Ежедневно',
+    taskName: 'Со',
+    taskType: 'G',
+};
+const dateTestCase1 = '2022-07-17T11:23:58.076Z';
+
+describe('Cases', () => {
+    it('Case active', () => {
+        const { active } = taskStatusHandler(testCase, new Date(dateTestCase));
+        expect(active).toBe(true);
+    });
+    it('Case active', () => {
+        const { active } = taskStatusHandler(
+            testCase1,
+            new Date(dateTestCase1)
         );
         expect(active).toBe(true);
     });
